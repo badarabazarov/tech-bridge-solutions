@@ -57,6 +57,9 @@ const Index = () => {
                     placeholder="Your Message" 
                     className="px-4 py-3 rounded-md text-gray-900 min-h-32"
                   ></textarea>
+                  <div className="text-center text-gray-900 mb-4">
+                    Call us at: <a href="tel:+79992138283" className="font-bold text-primary hover:underline">+7 (999) 213-82-83</a>
+                  </div>
                   <button className="bg-white text-primary font-semibold py-3 px-6 rounded-md hover:bg-opacity-90 transition-colors">
                     Send Message
                   </button>
