@@ -1,48 +1,51 @@
 
 import React from 'react';
 import { Card } from "@/components/ui/card";
-
-const partners = [
-  { 
-    name: "Bitrix24", 
-    logo: "https://placeholder.com/wp-content/uploads/2018/10/placeholder.com-logo1.png",
-    description: "A complete suite of business tools for collaboration and CRM"
-  },
-  { 
-    name: "amoCRM", 
-    logo: "https://placeholder.com/wp-content/uploads/2018/10/placeholder.com-logo1.png",
-    description: "Leading sales acceleration platform"
-  },
-  { 
-    name: "Microsoft", 
-    logo: "https://placeholder.com/wp-content/uploads/2018/10/placeholder.com-logo1.png",
-    description: "Enterprise software and cloud solutions"
-  },
-  { 
-    name: "Google Cloud", 
-    logo: "https://placeholder.com/wp-content/uploads/2018/10/placeholder.com-logo1.png",
-    description: "Cloud computing services and APIs"
-  },
-  { 
-    name: "AWS", 
-    logo: "https://placeholder.com/wp-content/uploads/2018/10/placeholder.com-logo1.png",
-    description: "On-demand cloud computing platforms"
-  },
-  { 
-    name: "Salesforce", 
-    logo: "https://placeholder.com/wp-content/uploads/2018/10/placeholder.com-logo1.png",
-    description: "Customer relationship management solution"
-  }
-];
+import { useLanguage } from '@/context/LanguageContext';
 
 const PartnersSection = () => {
+  const { t } = useLanguage();
+  
+  const partners = [
+    { 
+      name: "Bitrix24", 
+      logo: "https://placeholder.com/wp-content/uploads/2018/10/placeholder.com-logo1.png",
+      description: "A complete suite of business tools for collaboration and CRM"
+    },
+    { 
+      name: "amoCRM", 
+      logo: "https://placeholder.com/wp-content/uploads/2018/10/placeholder.com-logo1.png",
+      description: "Leading sales acceleration platform"
+    },
+    { 
+      name: "Microsoft", 
+      logo: "https://placeholder.com/wp-content/uploads/2018/10/placeholder.com-logo1.png",
+      description: "Enterprise software and cloud solutions"
+    },
+    { 
+      name: "Google Cloud", 
+      logo: "https://placeholder.com/wp-content/uploads/2018/10/placeholder.com-logo1.png",
+      description: "Cloud computing services and APIs"
+    },
+    { 
+      name: "AWS", 
+      logo: "https://placeholder.com/wp-content/uploads/2018/10/placeholder.com-logo1.png",
+      description: "On-demand cloud computing platforms"
+    },
+    { 
+      name: "Salesforce", 
+      logo: "https://placeholder.com/wp-content/uploads/2018/10/placeholder.com-logo1.png",
+      description: "Customer relationship management solution"
+    }
+  ];
+
   return (
     <section id="partners" className="section bg-gray-50">
       <div className="container mx-auto">
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="mb-4">Our Partners</h2>
+          <h2 className="mb-4">{t('partners.title')}</h2>
           <p className="text-lg text-gray-600">
-            We collaborate with industry leaders to bring you the best solutions.
+            {t('partners.subtitle')}
           </p>
         </div>
 

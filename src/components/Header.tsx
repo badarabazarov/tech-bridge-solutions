@@ -1,9 +1,13 @@
+
 import React, { useState } from 'react';
-import { Menu, X, ChevronDown } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/context/LanguageContext";
+import LanguageSwitcher from './LanguageSwitcher';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { t } = useLanguage();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -23,36 +27,38 @@ const Header = () => {
         {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-6">
           <a href="#services" className="text-sm font-medium hover:text-brand-600 transition-colors">
-            Services
+            {t('nav.services')}
           </a>
           <a href="#partners" className="text-sm font-medium hover:text-brand-600 transition-colors">
-            Partners
+            {t('nav.partners')}
           </a>
           <a href="#clients" className="text-sm font-medium hover:text-brand-600 transition-colors">
-            Clients
+            {t('nav.clients')}
           </a>
           <a href="#benefits" className="text-sm font-medium hover:text-brand-600 transition-colors">
-            Benefits
+            {t('nav.benefits')}
           </a>
           <a href="#tariffs" className="text-sm font-medium hover:text-brand-600 transition-colors">
-            Tariffs
+            {t('nav.tariffs')}
           </a>
           <a href="#cases" className="text-sm font-medium hover:text-brand-600 transition-colors">
-            Cases
+            {t('nav.cases')}
           </a>
           <a href="#testimonials" className="text-sm font-medium hover:text-brand-600 transition-colors">
-            Testimonials
+            {t('nav.testimonials')}
           </a>
           <a href="#about" className="text-sm font-medium hover:text-brand-600 transition-colors">
-            About
+            {t('nav.about')}
           </a>
           <a href="#contact" className="text-sm font-medium hover:text-brand-600 transition-colors">
-            Contact
+            {t('nav.contact')}
           </a>
+          <LanguageSwitcher />
         </nav>
 
-        <div className="hidden md:block">
-          <Button variant="default" size="sm">Get a Quote</Button>
+        <div className="hidden md:flex items-center gap-4">
+          <LanguageSwitcher />
+          <Button variant="default" size="sm">{t('nav.quote')}</Button>
         </div>
 
         {/* Mobile menu button */}
@@ -74,33 +80,34 @@ const Header = () => {
         <div className="md:hidden bg-white border-b">
           <div className="container py-4 space-y-3">
             <a href="#services" className="block text-sm font-medium hover:text-brand-600 transition-colors">
-              Services
+              {t('nav.services')}
             </a>
             <a href="#partners" className="block text-sm font-medium hover:text-brand-600 transition-colors">
-              Partners
+              {t('nav.partners')}
             </a>
             <a href="#clients" className="block text-sm font-medium hover:text-brand-600 transition-colors">
-              Clients
+              {t('nav.clients')}
             </a>
             <a href="#benefits" className="block text-sm font-medium hover:text-brand-600 transition-colors">
-              Benefits
+              {t('nav.benefits')}
             </a>
             <a href="#tariffs" className="block text-sm font-medium hover:text-brand-600 transition-colors">
-              Tariffs
+              {t('nav.tariffs')}
             </a>
             <a href="#cases" className="block text-sm font-medium hover:text-brand-600 transition-colors">
-              Cases
+              {t('nav.cases')}
             </a>
             <a href="#testimonials" className="block text-sm font-medium hover:text-brand-600 transition-colors">
-              Testimonials
+              {t('nav.testimonials')}
             </a>
             <a href="#about" className="block text-sm font-medium hover:text-brand-600 transition-colors">
-              About
+              {t('nav.about')}
             </a>
             <a href="#contact" className="block text-sm font-medium hover:text-brand-600 transition-colors">
-              Contact
+              {t('nav.contact')}
             </a>
-            <Button variant="default" size="sm" className="w-full">Get a Quote</Button>
+            <LanguageSwitcher />
+            <Button variant="default" size="sm" className="w-full">{t('nav.quote')}</Button>
           </div>
         </div>
       )}

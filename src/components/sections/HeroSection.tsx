@@ -2,46 +2,49 @@
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Shield, Zap, Clock } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 
 const HeroSection = () => {
+  const { t } = useLanguage();
+
   return (
     <section className="relative bg-gradient-to-br from-white to-blue-50 py-20 md:py-28">
       <div className="container mx-auto px-4">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="space-y-6 max-w-xl">
             <h1 className="font-bold text-4xl md:text-5xl lg:text-6xl tracking-tight animate-fade-in">
-              Transforming Businesses Through <span className="bg-gradient-to-r from-brand-600 to-accent-teal bg-clip-text text-transparent">Automation</span>
+              {t('hero.title')} <span className="bg-gradient-to-r from-brand-600 to-accent-teal bg-clip-text text-transparent">{t('hero.titleHighlight')}</span>
             </h1>
             
             <p className="text-lg text-gray-600 md:text-xl animate-fade-in" style={{animationDelay: "100ms"}}>
-              We build custom IT solutions that automate processes, improve efficiency, and drive growth for businesses of all sizes.
+              {t('hero.subtitle')}
             </p>
             
             <div className="flex flex-wrap gap-4 pt-4 animate-fade-in" style={{animationDelay: "200ms"}}>
               <Button size="lg" className="gap-2 group">
-                Get Started 
+                {t('hero.getStarted')}
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Button>
               
               <Button size="lg" variant="outline">
-                Our Services
+                {t('hero.ourServices')}
               </Button>
             </div>
             
             <div className="pt-8 grid grid-cols-1 sm:grid-cols-3 gap-4 animate-fade-in" style={{animationDelay: "300ms"}}>
               <div className="flex items-center gap-2">
                 <Shield className="h-5 w-5 text-brand-600" />
-                <span className="text-sm font-medium">Secure Solutions</span>
+                <span className="text-sm font-medium">{t('hero.secure')}</span>
               </div>
               
               <div className="flex items-center gap-2">
                 <Zap className="h-5 w-5 text-brand-600" />
-                <span className="text-sm font-medium">Fast Deployment</span>
+                <span className="text-sm font-medium">{t('hero.fast')}</span>
               </div>
               
               <div className="flex items-center gap-2">
                 <Clock className="h-5 w-5 text-brand-600" />
-                <span className="text-sm font-medium">24/7 Support</span>
+                <span className="text-sm font-medium">{t('hero.support')}</span>
               </div>
             </div>
           </div>

@@ -1,8 +1,11 @@
+
 import React from 'react';
 import { Mail, Phone, MapPin, Linkedin, Facebook, Twitter } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const { t } = useLanguage();
 
   return (
     <footer className="bg-gray-900 text-white">
@@ -14,7 +17,7 @@ const Footer = () => {
               Automagica Solutions
             </h3>
             <p className="text-gray-300 mb-4">
-              We provide professional automation services and IT solutions to help businesses transform and grow.
+              {t('footer.about')}
             </p>
             <div className="flex space-x-4">
               <a href="#" className="text-gray-300 hover:text-white transition-colors">
@@ -31,19 +34,19 @@ const Footer = () => {
 
           {/* Quick links */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
+            <h3 className="text-lg font-semibold mb-4">{t('footer.quickLinks')}</h3>
             <ul className="space-y-2">
-              <li><a href="#services" className="text-gray-300 hover:text-white transition-colors">Services</a></li>
-              <li><a href="#partners" className="text-gray-300 hover:text-white transition-colors">Partners</a></li>
-              <li><a href="#clients" className="text-gray-300 hover:text-white transition-colors">Clients</a></li>
-              <li><a href="#cases" className="text-gray-300 hover:text-white transition-colors">Case Studies</a></li>
-              <li><a href="#about" className="text-gray-300 hover:text-white transition-colors">About Us</a></li>
+              <li><a href="#services" className="text-gray-300 hover:text-white transition-colors">{t('nav.services')}</a></li>
+              <li><a href="#partners" className="text-gray-300 hover:text-white transition-colors">{t('nav.partners')}</a></li>
+              <li><a href="#clients" className="text-gray-300 hover:text-white transition-colors">{t('nav.clients')}</a></li>
+              <li><a href="#cases" className="text-gray-300 hover:text-white transition-colors">{t('nav.cases')}</a></li>
+              <li><a href="#about" className="text-gray-300 hover:text-white transition-colors">{t('nav.about')}</a></li>
             </ul>
           </div>
 
           {/* Contact info */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
+            <h3 className="text-lg font-semibold mb-4">{t('footer.contactUs')}</h3>
             <ul className="space-y-3">
               <li className="flex items-start">
                 <MapPin className="h-5 w-5 mr-2 text-gray-400 flex-shrink-0 mt-0.5" />
@@ -63,10 +66,10 @@ const Footer = () => {
 
         <div className="border-t border-gray-800 mt-12 pt-6 text-sm text-gray-400">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <p>© {currentYear} Automagica Solutions. All rights reserved.</p>
+            <p>© {currentYear} Automagica Solutions. {t('footer.rights')}</p>
             <div className="flex space-x-6 mt-4 md:mt-0">
-              <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-              <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
+              <a href="#" className="hover:text-white transition-colors">{t('footer.privacy')}</a>
+              <a href="#" className="hover:text-white transition-colors">{t('footer.terms')}</a>
             </div>
           </div>
         </div>

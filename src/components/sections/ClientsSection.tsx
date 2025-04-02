@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Card } from "@/components/ui/card";
+import { useLanguage } from '@/context/LanguageContext';
 import {
   Carousel,
   CarouselContent,
@@ -9,47 +10,49 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 
-const clients = [
-  { 
-    name: "Nayan-Navaa", 
-    image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300&q=80",
-    description: "Technology Partner"
-  },
-  { 
-    name: "S Ogonkom", 
-    image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300&q=80",
-    description: "Software Solutions"
-  },
-  { 
-    name: "Iron Horse", 
-    image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300&q=80",
-    description: "Enterprise Client"
-  },
-  { 
-    name: "Sytaya Cherepaha", 
-    image: "https://images.unsplash.com/photo-1531297484001-80022131f5a1?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300&q=80",
-    description: "Strategic Partner"
-  },
-  { 
-    name: "Tuya", 
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300&q=80",
-    description: "Global Partner"
-  },
-  { 
-    name: "AltanSerge", 
-    image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300&q=80",
-    description: "Technology Client"
-  }
-];
-
 const ClientsSection = () => {
+  const { t } = useLanguage();
+  
+  const clients = [
+    { 
+      name: "Nayan-Navaa", 
+      image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300&q=80",
+      description: "Technology Partner"
+    },
+    { 
+      name: "S Ogonkom", 
+      image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300&q=80",
+      description: "Software Solutions"
+    },
+    { 
+      name: "Iron Horse", 
+      image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300&q=80",
+      description: "Enterprise Client"
+    },
+    { 
+      name: "Sytaya Cherepaha", 
+      image: "https://images.unsplash.com/photo-1531297484001-80022131f5a1?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300&q=80",
+      description: "Strategic Partner"
+    },
+    { 
+      name: "Tuya", 
+      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300&q=80",
+      description: "Global Partner"
+    },
+    { 
+      name: "AltanSerge", 
+      image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300&q=80",
+      description: "Technology Client"
+    }
+  ];
+
   return (
     <section id="clients" className="section bg-white">
       <div className="container mx-auto">
         <div className="text-center max-w-3xl mx-auto mb-12">
-          <h2 className="mb-4">Our Clients</h2>
+          <h2 className="mb-4">{t('clients.title')}</h2>
           <p className="text-lg text-gray-600">
-            Trusted by leading companies across various industries.
+            {t('clients.subtitle')}
           </p>
         </div>
 
