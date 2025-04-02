@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import { Button } from "@/components/ui/button";
@@ -16,7 +15,7 @@ const Header = () => {
         <div className="flex items-center gap-2">
           <a href="/" className="flex items-center space-x-2">
             <span className="text-2xl font-bold bg-gradient-to-r from-brand-700 to-accent-teal bg-clip-text text-transparent">
-              TechBridge
+              Automagica
             </span>
           </a>
         </div>
