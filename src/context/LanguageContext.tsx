@@ -450,7 +450,7 @@ const translations = {
     'tariffs.basic.feature4': 'END-TO-END TESTING',
 
     'tariffs.standard.name': 'FoodFlow AI',
-    'tariffs.standard.price': 'from 85,000 RUB',
+    'tariffs.standard.price': 'from 4,000 RUB/month',
     'tariffs.standard.description': 'For those who want to automate orders in cafes and restaurants',
     'tariffs.standard.feature1': 'DELIVERY AND PICKUP WEBSITE',
     'tariffs.standard.feature2': 'TELEGRAM CHAT BOTS WITH AI ASSISTANT FOR ORDERS',

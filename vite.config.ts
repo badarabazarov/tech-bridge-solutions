@@ -1,49 +1,39 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react-swc";
-import path from "path";
-import { componentTagger } from "lovable-tagger";
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import path from 'path';
 
 // https://vitejs.dev/config/
-export default defineConfig(({ mode }) => ({
-  // Убрал base для локальной разработки (можно раскомментировать для продакшена)
-  // base: "/tech-bridge-solutions/",
-  
-  server: {
-    host: "::",
-    port: 8080,
-    // Добавил критически важные настройки для SPA
-    historyApiFallback: true,
-    open: true, // Автоматически открывать браузер
-  },
-  
-  plugins: [
-    react(),
-    mode === 'development' && componentTagger(),
-  ].filter(Boolean),
-  
+export default defineConfig({
+  plugins: [react()],
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"),
+      '@': path.resolve(__dirname, './src'),
+      '@components': path.resolve(__dirname, './src/components'),
+      '@assets': path.resolve(__dirname, './src/assets'),
     },
   },
-
-  // Оптимизации сборки
+  server: {
+    allowedHosts: ['automagica.tech', 'www.automagica.tech'],
+    port: 3000,
+    open: true,
+    host: true,
+    watch: {
+      usePolling: true,
+      interval: 1000
+    },
+    hmr: {
+      overlay: false // Optional: disable HMR overlay if you prefer
+    },
+    fs: {
+      strict: true,
+      deny: ['.env', '.git', 'node_modules']
+    }
+  },
+  optimizeDeps: {
+    exclude: ['.git/*'] // Explicitly exclude .git directory
+  },
   build: {
-    outDir: "dist",
-    assetsDir: "assets",
+    outDir: 'dist',
     emptyOutDir: true,
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          react: ['react', 'react-dom'],
-          vendor: ['lodash', 'axios'], // Добавьте свои часто используемые библиотеки
-        },
-      },
-    },
   },
-
-  // Для лучшего отслеживания ошибок
-  esbuild: {
-    drop: mode === 'production' ? ['console', 'debugger'] : [],
-  },
-}));
+});
