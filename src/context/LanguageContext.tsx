@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 // Define available languages
@@ -686,22 +687,22 @@ const en = {
     title: 'Client Testimonials',
     subtitle: 'See what our clients say about working with us',
     client1: {
-      name: 'Анна Цыренова',
-      position: 'Директор',
-      company: 'Кафе «С огоньком!»',
-      text: 'Мы познакомились прошлым летом, когда создавали с нуля сайт для кафе «С огоньком!» в поселке Агинское. С тех пор наше сотрудничество продолжается. Мне очень нравится, потому что это профессионалы в своем деле, всё делается быстро, без лишних вопросов и проблем. Я искренне благодарна за качественную работу и оперативное решение любых вопросов — будь то доработки сайта или консультации по другим техническим моментам. С Бадара легко и комфортно сотрудничать, поэтому я всегда обращаюсь именно к нему. Большое спасибо за отличную работу!'
+      name: 'Anna Tsyrenova',
+      position: 'Director',
+      company: 'Cafe "S Ogonkom!"',
+      text: 'We met last summer when we were creating a website from scratch for the cafe "S Ogonkom!" in Aginskoye village. Since then, our cooperation continues. I really like it because they are professionals in their field, everything is done quickly, without unnecessary questions and problems. I am sincerely grateful for the quality work and prompt resolution of any issues - whether it\'s website improvements or consultations on other technical aspects. It\'s easy and comfortable to work with Badara, which is why I always turn to him. Thank you very much for the excellent work!'
     },
     client2: {
-      name: 'Дмитрий Иванов',
+      name: 'Dmitry Ivanov',
       position: 'CEO',
-      company: 'ТехноПром',
+      company: 'TechnoProm',
       text: 'We have been working with Automagica Solutions for over a year. During this time, they implemented a CRM system for us and integrated it with our website and telephony. The result exceeded expectations - sales increased by 35%, and the time for processing applications was reduced by three times. I would like to separately note the professionalism of the team and their willingness to promptly resolve emerging issues.'
     },
     client3: {
-      name: 'Сергей и Марина',
-      position: 'Владельцы',
-      company: 'Гостевой дом «Байкал»',
-      text: 'Спасибо Вашей команде за крутой проект нашего сайта! Для нас с Мариной это был первый опыт, многое было непонятно и сложно, поэтому благодарим за терпение и понимание! Желаем дальнейших успехов! Пусть Ваши планы успешно реализуются!✊✊✊'
+      name: 'Sergey and Marina',
+      position: 'Owners',
+      company: 'Guest House "Baikal"',
+      text: 'Thank you to your team for the great project of our website! For Marina and me, this was our first experience, many things were unclear and difficult, so we thank you for your patience and understanding! We wish you continued success! May your plans be successfully implemented!✊✊✊'
     }
   },
   about: {
@@ -779,7 +780,74 @@ interface LanguageContextType {
   language: Language;
   setLanguage: (lang: Language) => void;
   t: (key: string) => string;
+  lang: Language; // Added to fix the issue in LanguageSwitcher
 }
 
 const LanguageContext = createContext<LanguageContextType>({
-  language: '
+  language: 'ru',
+  setLanguage: () => {},
+  t: () => '',
+  lang: 'ru', // Added to fix the issue in LanguageSwitcher
+});
+
+// Get nested translation values by dot notation
+const getNestedTranslation = (obj: any, path: string): string => {
+  const keys = path.split('.');
+  let result = obj;
+  
+  for (const key of keys) {
+    if (result && typeof result === 'object' && key in result) {
+      result = result[key];
+    } else {
+      return path; // Return the key if translation not found
+    }
+  }
+  
+  return typeof result === 'string' ? result : path;
+};
+
+// Language provider component
+interface LanguageProviderProps {
+  children: ReactNode;
+}
+
+export const LanguageProvider = ({ children }: LanguageProviderProps) => {
+  // Initialize language from localStorage or default to Russian
+  const [language, setLanguage] = useState<Language>(() => {
+    const savedLanguage = localStorage.getItem('language');
+    return (savedLanguage && languages.includes(savedLanguage as Language)) 
+      ? (savedLanguage as Language) 
+      : 'ru';
+  });
+
+  // Update localStorage when language changes
+  useEffect(() => {
+    localStorage.setItem('language', language);
+  }, [language]);
+
+  // Translate function
+  const t = (key: string): string => {
+    const translations = language === 'ru' ? ru : en;
+    return getNestedTranslation(translations, key);
+  };
+
+  return (
+    <LanguageContext.Provider value={{ 
+      language, 
+      setLanguage, 
+      t,
+      lang: language // Added to fix the issue in LanguageSwitcher
+    }}>
+      {children}
+    </LanguageContext.Provider>
+  );
+};
+
+// Custom hook to use the language context
+export const useLanguage = () => {
+  const context = useContext(LanguageContext);
+  if (!context) {
+    throw new Error('useLanguage must be used within a LanguageProvider');
+  }
+  return context;
+};

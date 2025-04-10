@@ -1,15 +1,16 @@
+
 import React from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import { Button } from '@/components/ui/button';
 import { Globe } from 'lucide-react';
 
 const LanguageSwitcher = () => {
-  const { lang, setLanguage } = useLanguage(); // Используем lang вместо language
+  const { language, setLanguage } = useLanguage();
 
   const toggleLanguage = () => {
-    const newLang = lang === 'ru' ? 'en' : 'ru';
+    const newLang = language === 'ru' ? 'en' : 'ru';
     setLanguage(newLang);
-    console.log('Language changed to:', newLang); // Для отладки
+    console.log('Language changed to:', newLang); // For debugging
   };
   
   return (
@@ -20,7 +21,7 @@ const LanguageSwitcher = () => {
       className="flex items-center gap-1"
     >
       <Globe className="h-4 w-4" />
-      {lang === 'ru' ? 'EN' : 'RU'} {/* Используем lang */}
+      {language === 'ru' ? 'EN' : 'RU'}
     </Button>
   );
 };
