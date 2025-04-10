@@ -1,530 +1,785 @@
-import React, { createContext, useContext, useMemo, useState, ReactNode, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
-// ============================================================
-// Типы и интерфейсы
-// ============================================================
-export type Language = 'ru' | 'en';
+// Define available languages
+const languages = ['ru', 'en'] as const;
+type Language = typeof languages[number];
 
-type Translations = typeof translations.ru & typeof translations.en;
-type TranslationKey = keyof Translations;
+// Russian translations
+const ru = {
+  nav: {
+    services: 'Услуги',
+    partners: 'Партнеры',
+    clients: 'Клиенты',
+    benefits: 'Преимущества',
+    tariffs: 'Тарифы',
+    cases: 'Кейсы',
+    testimonials: 'Отзывы',
+    about: 'О нас',
+    contact: 'Контакты',
+    quote: 'Получить предложение',
+    tariffMenu: {
+      crm: 'Внедрение CRM',
+      restaurant: 'Решения для ресторанов',
+      hotel: 'Решения для гостиниц',
+      custom: 'Заказная разработка'
+    }
+  },
+  hero: {
+    title: 'Automagica Solutions',
+    subtitle: 'Автоматизация бизнес-процессов',
+    desc: 'Мы помогаем компаниям автоматизировать рутинные процессы, повышать эффективность и сокращать расходы с помощью современных IT-решений.',
+    cta: 'Заказать консультацию',
+    learnMore: 'Узнать больше',
+  },
+  services: {
+    title: 'Наши услуги',
+    subtitle: 'Мы предлагаем полный спектр услуг для автоматизации и цифровизации вашего бизнеса',
+    crmImplementation: {
+      title: 'Внедрение CRM',
+      desc: 'Настройка и внедрение CRM-систем для автоматизации продаж и маркетинга',
+    },
+    customSoftware: {
+      title: 'Разработка ПО',
+      desc: 'Создание индивидуальных программных решений под ваши бизнес-задачи',
+    },
+    mobileApps: {
+      title: 'Мобильные приложения',
+      desc: 'Разработка нативных и кросс-платформенных мобильных приложений',
+    },
+    itConsulting: {
+      title: 'IT-консалтинг',
+      desc: 'Анализ бизнес-процессов и рекомендации по оптимизации IT-инфраструктуры',
+    },
+  },
+  partners: {
+    title: 'Наши партнеры',
+    subtitle: 'Мы работаем с лучшими технологическими платформами для создания оптимальных решений',
+  },
+  clients: {
+    title: 'Наши клиенты',
+    subtitle: 'Компании, которые доверили нам автоматизацию своих бизнес-процессов',
+  },
+  benefits: {
+    title: 'Почему выбирают нас',
+    subtitle: 'Наши ключевые преимущества и подход к работе',
+    expertise: {
+      title: 'Экспертиза',
+      desc: 'Опытная команда с глубокими техническими знаниями и отраслевой экспертизой',
+    },
+    quality: {
+      title: 'Качество',
+      desc: 'Строгий контроль качества и тестирование на всех этапах разработки',
+    },
+    support: {
+      title: 'Поддержка',
+      desc: 'Оперативная техническая поддержка и сопровождение внедренных решений',
+    },
+    innovation: {
+      title: 'Инновации',
+      desc: 'Использование современных технологий и инновационных подходов',
+    },
+  },
+  cta: {
+    title: 'Готовы начать?',
+    subtitle: 'Закажите бесплатную консультацию прямо сейчас',
+    button: 'Связаться с нами',
+  },
+  contact: {
+    title: 'Свяжитесь с нами',
+    subtitle: 'Заполните форму, и мы свяжемся с вами в ближайшее время',
+    name: 'Имя',
+    email: 'Email',
+    phone: 'Телефон',
+    message: 'Сообщение',
+    submit: 'Отправить',
+    namePlaceholder: 'Ваше имя',
+    emailPlaceholder: 'Ваш email',
+    phonePlaceholder: 'Ваш телефон',
+    messagePlaceholder: 'Ваше сообщение...',
+    success: 'Сообщение отправлено! Мы свяжемся с вами в ближайшее время.',
+    error: 'Произошла ошибка при отправке сообщения. Пожалуйста, попробуйте еще раз.',
+  },
+  footer: {
+    services: 'Услуги',
+    crmImplementation: 'Внедрение CRM',
+    customSoftware: 'Разработка ПО',
+    mobileApps: 'Мобильные приложения',
+    itConsulting: 'IT-консалтинг',
+    company: 'Компания',
+    about: 'О нас',
+    team: 'Команда',
+    careers: 'Карьера',
+    blog: 'Блог',
+    legal: 'Правовая информация',
+    privacy: 'Политика конфиденциальности',
+    terms: 'Условия использования',
+    copyright: '© 2023 Automagica Solutions. Все права защищены.',
+    contact: 'Контакты',
+    address: 'г. Улан-Удэ, Россия',
+    emailContact: 'info@automagica.ru',
+    phone: '+7 (999) 123-45-67',
+  },
+  tariffs: {
+    title: 'Наши тарифы',
+    subtitle: 'Выберите оптимальный тариф для ваших бизнес-задач',
+    popular: 'Популярный',
+    select: 'Выбрать тариф',
+    customText: 'Нужно индивидуальное решение?',
+    contactUs: 'Свяжитесь с нами',
 
+    basic: {
+      name: 'Базовый',
+      price: '50 000 ₽',
+      description: 'Идеально для малого бизнеса и стартапов',
+      feature1: 'Базовая настройка CRM',
+      feature2: 'Импорт данных',
+      feature3: 'Обучение сотрудников (2 часа)',
+      feature4: 'Техническая поддержка 5/2'
+    },
+    standard: {
+      name: 'Стандарт',
+      price: '100 000 ₽',
+      description: 'Оптимальное решение для среднего бизнеса',
+      feature1: 'Расширенная настройка CRM',
+      feature2: 'Интеграция с 3 системами',
+      feature3: 'Импорт и структурирование данных',
+      feature4: 'Обучение сотрудников (5 часов)',
+      feature5: 'Техническая поддержка 7/2'
+    },
+    premium: {
+      name: 'Премиум',
+      price: '200 000 ₽',
+      description: 'Комплексное решение для крупного бизнеса',
+      feature1: 'Полная настройка CRM под ваши бизнес-процессы',
+      feature2: 'Интеграция с неограниченным количеством систем',
+      feature3: 'Миграция и очистка данных',
+      feature4: 'Обучение сотрудников (10 часов)',
+      feature5: 'Премиум поддержка 24/7'
+    },
+    
+    // CRM Tariffs
+    crm: {
+      title: 'Внедрение CRM',
+      subtitle: 'Автоматизируйте взаимодействие с клиентами с помощью современных CRM-систем',
+      basic: {
+        name: 'Базовый',
+        price: '50 000 ₽',
+        description: 'Идеально для малого бизнеса и стартапов',
+        feature1: 'Базовая настройка CRM',
+        feature2: 'Импорт данных',
+        feature3: 'Обучение сотрудников (2 часа)',
+        feature4: 'Техническая поддержка 5/2'
+      },
+      standard: {
+        name: 'Стандарт',
+        price: '100 000 ₽',
+        description: 'Оптимальное решение для среднего бизнеса',
+        feature1: 'Расширенная настройка CRM',
+        feature2: 'Интеграция с 3 системами',
+        feature3: 'Импорт и структурирование данных',
+        feature4: 'Обучение сотрудников (5 часов)',
+        feature5: 'Техническая поддержка 7/2'
+      },
+      premium: {
+        name: 'Премиум',
+        price: '200 000 ₽',
+        description: 'Комплексное решение для крупного бизнеса',
+        feature1: 'Полная настройка CRM под ваши бизнес-процессы',
+        feature2: 'Интеграция с неограниченным количеством систем',
+        feature3: 'Миграция и очистка данных',
+        feature4: 'Обучение сотрудников (10 часов)',
+        feature5: 'Премиум поддержка 24/7'
+      }
+    },
+    
+    // Restaurant Tariffs
+    restaurant: {
+      title: 'Решения для ресторанов',
+      subtitle: 'Комплексная автоматизация ресторанного бизнеса',
+      basic: {
+        name: 'Базовый',
+        price: '70 000 ₽',
+        description: 'Идеально для небольших кафе и баров',
+        feature1: 'Автоматизация приема заказов',
+        feature2: 'Управление меню',
+        feature3: 'Базовая аналитика продаж',
+        feature4: 'Техническая поддержка 5/2'
+      },
+      standard: {
+        name: 'Стандарт',
+        price: '150 000 ₽',
+        description: 'Оптимальное решение для ресторанов среднего размера',
+        feature1: 'Все функции базового тарифа',
+        feature2: 'Управление запасами и закупками',
+        feature3: 'Интеграция с бухгалтерией',
+        feature4: 'Система лояльности клиентов',
+        feature5: 'Техническая поддержка 7/2'
+      },
+      premium: {
+        name: 'Премиум',
+        price: '250 000 ₽',
+        description: 'Комплексное решение для сети ресторанов',
+        feature1: 'Все функции стандартного тарифа',
+        feature2: 'Управление несколькими заведениями',
+        feature3: 'Расширенная аналитика и отчетность',
+        feature4: 'Интеграция с внешними системами доставки',
+        feature5: 'Премиум поддержка 24/7'
+      }
+    },
+    
+    // Hotel Tariffs
+    hotel: {
+      title: 'Решения для гостиниц',
+      subtitle: 'Автоматизация гостиничного бизнеса для любого масштаба',
+      basic: {
+        name: 'Базовый',
+        price: '80 000 ₽',
+        description: 'Идеально для мини-отелей и хостелов',
+        feature1: 'Управление бронированиями',
+        feature2: 'Календарь занятости номеров',
+        feature3: 'Базовая отчетность',
+        feature4: 'Техническая поддержка 5/2'
+      },
+      standard: {
+        name: 'Стандарт',
+        price: '180 000 ₽',
+        description: 'Оптимальное решение для отелей среднего размера',
+        feature1: 'Все функции базового тарифа',
+        feature2: 'Интеграция с платежными системами',
+        feature3: 'Система управления уборкой',
+        feature4: 'Модуль для работы с туроператорами',
+        feature5: 'Техническая поддержка 7/2'
+      },
+      premium: {
+        name: 'Премиум',
+        price: '300 000 ₽',
+        description: 'Комплексное решение для гостиничных сетей',
+        feature1: 'Все функции стандартного тарифа',
+        feature2: 'Управление несколькими объектами',
+        feature3: 'Расширенная аналитика и отчетность',
+        feature4: 'Интеграция с глобальными системами бронирования',
+        feature5: 'Премиум поддержка 24/7'
+      }
+    },
+    
+    // Custom Development Tariffs
+    custom: {
+      title: 'Заказная разработка',
+      subtitle: 'Индивидуальные программные решения для ваших уникальных задач',
+      basic: {
+        name: 'Стартовый',
+        price: 'от 150 000 ₽',
+        description: 'Для небольших проектов с базовым функционалом',
+        feature1: 'Анализ требований',
+        feature2: 'Прототипирование интерфейса',
+        feature3: 'Разработка MVP',
+        feature4: 'Базовое тестирование'
+      },
+      standard: {
+        name: 'Бизнес',
+        price: 'от 300 000 ₽',
+        description: 'Для средних проектов с расширенным функционалом',
+        feature1: 'Детальный анализ требований',
+        feature2: 'UX/UI дизайн',
+        feature3: 'Полноценная разработка',
+        feature4: 'Комплексное тестирование',
+        feature5: 'Сопровождение после запуска (3 месяца)'
+      },
+      premium: {
+        name: 'Энтерпрайз',
+        price: 'от 500 000 ₽',
+        description: 'Для сложных корпоративных проектов',
+        feature1: 'Глубокий бизнес-анализ',
+        feature2: 'Проектирование архитектуры',
+        feature3: 'Разработка высоконагруженных систем',
+        feature4: 'Многоуровневое тестирование',
+        feature5: 'Расширенная техническая поддержка'
+      }
+    }
+  },
+  testimonials: {
+    title: 'Отзывы наших клиентов',
+    subtitle: 'Узнайте, что говорят о нас те, кто уже работал с нами',
+    client1: {
+      name: 'Анна Цыренова',
+      position: 'Директор',
+      company: 'Кафе «С огоньком!»',
+      text: 'Мы познакомились прошлым летом, когда создавали с нуля сайт для кафе «С огоньком!» в поселке Агинское. С тех пор наше сотрудничество продолжается. Мне очень нравится, потому что это профессионалы в своем деле, всё делается быстро, без лишних вопросов и проблем. Я искренне благодарна за качественную работу и оперативное решение любых вопросов — будь то доработки сайта или консультации по другим техническим моментам. С Бадара легко и комфортно сотрудничать, поэтому я всегда обращаюсь именно к нему. Большое спасибо за отличную работу!'
+    },
+    client2: {
+      name: 'Дмитрий Иванов',
+      position: 'CEO',
+      company: 'ТехноПром',
+      text: 'Сотрудничаем с Automagica Solutions уже более года. За это время нам внедрили CRM-систему и интегрировали ее с нашим сайтом и телефонией. Результат превзошел ожидания — продажи выросли на 35%, а время обработки заявок сократилось втрое. Отдельно хочу отметить профессионализм команды и готовность оперативно решать возникающие вопросы.'
+    },
+    client3: {
+      name: 'Сергей и Марина',
+      position: 'Владельцы',
+      company: 'Гостевой дом «Байкал»',
+      text: 'Спасибо Вашей команде за крутой проект нашего сайта! Для нас с Мариной это был первый опыт, многое было непонятно и сложно, поэтому благодарим за терпение и понимание! Желаем дальнейших успехов! Пусть Ваши планы успешно реализуются!✊✊✊'
+    }
+  },
+  about: {
+    title: 'О нас',
+    subtitle: 'Мы помогаем бизнесу становиться эффективнее с помощью современных технологий',
+    mission: {
+      title: 'Наша миссия',
+      desc: 'Делать технологии доступными и полезными для бизнеса любого масштаба, помогая компаниям развиваться и достигать новых высот.'
+    },
+    vision: {
+      title: 'Наше видение',
+      desc: 'Стать ведущей компанией в сфере автоматизации бизнес-процессов, создавая инновационные решения, которые меняют подход к ведению бизнеса.'
+    },
+    values: {
+      title: 'Наши ценности',
+      quality: 'Качество во всем, что мы делаем',
+      innovation: 'Инновационность и постоянное развитие',
+      client: 'Клиентоориентированность и индивидуальный подход',
+      transparency: 'Прозрачность и честность в работе'
+    },
+    team: {
+      title: 'Наша команда',
+      desc: 'За каждым успешным проектом стоит команда профессионалов',
+      ceo: {
+        name: 'Александр Петров',
+        position: 'CEO',
+        bio: 'Более 15 лет опыта в IT-индустрии. Руководил проектами для крупнейших российских компаний.'
+      },
+      cto: {
+        name: 'Бадара Базаров',
+        position: 'CTO',
+        bio: '12 лет опыта в разработке. Эксперт в области архитектуры программных решений и автоматизации бизнес-процессов.'
+      },
+      lead: {
+        name: 'Екатерина Смирнова',
+        position: 'Lead Developer',
+        bio: 'Опытный разработчик с глубокими знаниями в области веб-технологий и мобильной разработки.'
+      }
+    }
+  },
+  cases: {
+    title: 'Наши кейсы',
+    subtitle: 'Реальные примеры успешных проектов для наших клиентов',
+    readMore: 'Подробнее',
+    case1: {
+      title: 'Автоматизация ресторанной сети',
+      desc: 'Внедрение комплексной системы управления для сети из 5 ресторанов, включая автоматизацию склада, кухни и системы лояльности.',
+      results: 'Увеличение оборота на 27%, сокращение издержек на 15%, повышение лояльности клиентов.'
+    },
+    case2: {
+      title: 'CRM для строительной компании',
+      desc: 'Разработка и внедрение CRM-системы с учетом специфики строительного бизнеса, интеграция с учетной системой и сайтом.',
+      results: 'Сокращение цикла продаж на 30%, увеличение конверсии заявок в сделки на 24%.'
+    },
+    case3: {
+      title: 'Мобильное приложение для службы доставки',
+      desc: 'Создание нативного мобильного приложения для iOS и Android для службы доставки еды с интеграцией платежных систем и CRM.',
+      results: 'Более 10 000 скачиваний за первый месяц, рост заказов через приложение на 45%.'
+    },
+    case4: {
+      title: 'Автоматизация гостиничного комплекса',
+      desc: 'Внедрение системы управления гостиничным комплексом, включая модули бронирования, ресепшн, управления номерным фондом.',
+      results: 'Увеличение загрузки на 18%, сокращение времени на обработку бронирований на 75%.'
+    }
+  },
+  notFound: {
+    title: 'Страница не найдена',
+    message: 'Извините, запрашиваемая страница не существует.',
+    backButton: 'Вернуться на главную'
+  }
+};
+
+// English translations
+const en = {
+  nav: {
+    services: 'Services',
+    partners: 'Partners',
+    clients: 'Clients',
+    benefits: 'Benefits',
+    tariffs: 'Pricing',
+    cases: 'Cases',
+    testimonials: 'Testimonials',
+    about: 'About Us',
+    contact: 'Contact',
+    quote: 'Get a Quote',
+    tariffMenu: {
+      crm: 'CRM Implementation',
+      restaurant: 'Restaurant Solutions',
+      hotel: 'Hotel Solutions',
+      custom: 'Custom Development'
+    }
+  },
+  hero: {
+    title: 'Automagica Solutions',
+    subtitle: 'Business Process Automation',
+    desc: 'We help companies automate routine processes, increase efficiency, and reduce costs through modern IT solutions.',
+    cta: 'Request a Consultation',
+    learnMore: 'Learn More',
+  },
+  services: {
+    title: 'Our Services',
+    subtitle: 'We offer a full range of services for automation and digitalization of your business',
+    crmImplementation: {
+      title: 'CRM Implementation',
+      desc: 'Setup and implementation of CRM systems for sales and marketing automation',
+    },
+    customSoftware: {
+      title: 'Software Development',
+      desc: 'Creation of custom software solutions for your business needs',
+    },
+    mobileApps: {
+      title: 'Mobile Applications',
+      desc: 'Development of native and cross-platform mobile applications',
+    },
+    itConsulting: {
+      title: 'IT Consulting',
+      desc: 'Analysis of business processes and recommendations for optimizing IT infrastructure',
+    },
+  },
+  partners: {
+    title: 'Our Partners',
+    subtitle: 'We work with the best technology platforms to create optimal solutions',
+  },
+  clients: {
+    title: 'Our Clients',
+    subtitle: 'Companies that have entrusted us with the automation of their business processes',
+  },
+  benefits: {
+    title: 'Why Choose Us',
+    subtitle: 'Our key advantages and approach to work',
+    expertise: {
+      title: 'Expertise',
+      desc: 'Experienced team with deep technical knowledge and industry expertise',
+    },
+    quality: {
+      title: 'Quality',
+      desc: 'Strict quality control and testing at all stages of development',
+    },
+    support: {
+      title: 'Support',
+      desc: 'Prompt technical support and maintenance of implemented solutions',
+    },
+    innovation: {
+      title: 'Innovation',
+      desc: 'Use of modern technologies and innovative approaches',
+    },
+  },
+  cta: {
+    title: 'Ready to Start?',
+    subtitle: 'Request a free consultation right now',
+    button: 'Contact Us',
+  },
+  contact: {
+    title: 'Contact Us',
+    subtitle: 'Fill out the form and we will contact you as soon as possible',
+    name: 'Name',
+    email: 'Email',
+    phone: 'Phone',
+    message: 'Message',
+    submit: 'Submit',
+    namePlaceholder: 'Your name',
+    emailPlaceholder: 'Your email',
+    phonePlaceholder: 'Your phone',
+    messagePlaceholder: 'Your message...',
+    success: 'Message sent! We will contact you shortly.',
+    error: 'An error occurred while sending the message. Please try again.',
+  },
+  footer: {
+    services: 'Services',
+    crmImplementation: 'CRM Implementation',
+    customSoftware: 'Software Development',
+    mobileApps: 'Mobile Applications',
+    itConsulting: 'IT Consulting',
+    company: 'Company',
+    about: 'About Us',
+    team: 'Team',
+    careers: 'Careers',
+    blog: 'Blog',
+    legal: 'Legal Information',
+    privacy: 'Privacy Policy',
+    terms: 'Terms of Use',
+    copyright: '© 2023 Automagica Solutions. All rights reserved.',
+    contact: 'Contact',
+    address: 'Ulan-Ude, Russia',
+    emailContact: 'info@automagica.ru',
+    phone: '+7 (999) 123-45-67',
+  },
+  tariffs: {
+    title: 'Our Pricing',
+    subtitle: 'Choose the optimal plan for your business needs',
+    popular: 'Popular',
+    select: 'Select Plan',
+    customText: 'Need a custom solution?',
+    contactUs: 'Contact Us',
+
+    basic: {
+      name: 'Basic',
+      price: '50,000 ₽',
+      description: 'Perfect for small businesses and startups',
+      feature1: 'Basic CRM setup',
+      feature2: 'Data import',
+      feature3: 'Employee training (2 hours)',
+      feature4: 'Technical support 5/2'
+    },
+    standard: {
+      name: 'Standard',
+      price: '100,000 ₽',
+      description: 'Optimal solution for medium-sized businesses',
+      feature1: 'Advanced CRM setup',
+      feature2: 'Integration with 3 systems',
+      feature3: 'Import and structuring of data',
+      feature4: 'Employee training (5 hours)',
+      feature5: 'Technical support 7/2'
+    },
+    premium: {
+      name: 'Premium',
+      price: '200,000 ₽',
+      description: 'Comprehensive solution for large businesses',
+      feature1: 'Full CRM setup for your business processes',
+      feature2: 'Integration with unlimited systems',
+      feature3: 'Data migration and cleaning',
+      feature4: 'Employee training (10 hours)',
+      feature5: 'Premium support 24/7'
+    },
+
+    // CRM Tariffs
+    crm: {
+      title: 'CRM Implementation',
+      subtitle: 'Automate customer interactions with modern CRM systems',
+      basic: {
+        name: 'Basic',
+        price: '50,000 ₽',
+        description: 'Perfect for small businesses and startups',
+        feature1: 'Basic CRM setup',
+        feature2: 'Data import',
+        feature3: 'Employee training (2 hours)',
+        feature4: 'Technical support 5/2'
+      },
+      standard: {
+        name: 'Standard',
+        price: '100,000 ₽',
+        description: 'Optimal solution for medium-sized businesses',
+        feature1: 'Advanced CRM setup',
+        feature2: 'Integration with 3 systems',
+        feature3: 'Import and structuring of data',
+        feature4: 'Employee training (5 hours)',
+        feature5: 'Technical support 7/2'
+      },
+      premium: {
+        name: 'Premium',
+        price: '200,000 ₽',
+        description: 'Comprehensive solution for large businesses',
+        feature1: 'Full CRM setup for your business processes',
+        feature2: 'Integration with unlimited systems',
+        feature3: 'Data migration and cleaning',
+        feature4: 'Employee training (10 hours)',
+        feature5: 'Premium support 24/7'
+      }
+    },
+    
+    // Restaurant Tariffs
+    restaurant: {
+      title: 'Restaurant Solutions',
+      subtitle: 'Comprehensive automation for restaurant business',
+      basic: {
+        name: 'Basic',
+        price: '70,000 ₽',
+        description: 'Perfect for small cafes and bars',
+        feature1: 'Order taking automation',
+        feature2: 'Menu management',
+        feature3: 'Basic sales analytics',
+        feature4: 'Technical support 5/2'
+      },
+      standard: {
+        name: 'Standard',
+        price: '150,000 ₽',
+        description: 'Optimal solution for medium-sized restaurants',
+        feature1: 'All features of the Basic plan',
+        feature2: 'Inventory and procurement management',
+        feature3: 'Integration with accounting',
+        feature4: 'Customer loyalty system',
+        feature5: 'Technical support 7/2'
+      },
+      premium: {
+        name: 'Premium',
+        price: '250,000 ₽',
+        description: 'Comprehensive solution for restaurant chains',
+        feature1: 'All features of the Standard plan',
+        feature2: 'Multi-location management',
+        feature3: 'Advanced analytics and reporting',
+        feature4: 'Integration with external delivery systems',
+        feature5: 'Premium support 24/7'
+      }
+    },
+    
+    // Hotel Tariffs
+    hotel: {
+      title: 'Hotel Solutions',
+      subtitle: 'Automation for hotel business of any scale',
+      basic: {
+        name: 'Basic',
+        price: '80,000 ₽',
+        description: 'Perfect for mini-hotels and hostels',
+        feature1: 'Booking management',
+        feature2: 'Room occupancy calendar',
+        feature3: 'Basic reporting',
+        feature4: 'Technical support 5/2'
+      },
+      standard: {
+        name: 'Standard',
+        price: '180,000 ₽',
+        description: 'Optimal solution for medium-sized hotels',
+        feature1: 'All features of the Basic plan',
+        feature2: 'Integration with payment systems',
+        feature3: 'Housekeeping management system',
+        feature4: 'Tour operator module',
+        feature5: 'Technical support 7/2'
+      },
+      premium: {
+        name: 'Premium',
+        price: '300,000 ₽',
+        description: 'Comprehensive solution for hotel chains',
+        feature1: 'All features of the Standard plan',
+        feature2: 'Multi-property management',
+        feature3: 'Advanced analytics and reporting',
+        feature4: 'Integration with global reservation systems',
+        feature5: 'Premium support 24/7'
+      }
+    },
+    
+    // Custom Development Tariffs
+    custom: {
+      title: 'Custom Development',
+      subtitle: 'Individual software solutions for your unique tasks',
+      basic: {
+        name: 'Starter',
+        price: 'from 150,000 ₽',
+        description: 'For small projects with basic functionality',
+        feature1: 'Requirements analysis',
+        feature2: 'Interface prototyping',
+        feature3: 'MVP development',
+        feature4: 'Basic testing'
+      },
+      standard: {
+        name: 'Business',
+        price: 'from 300,000 ₽',
+        description: 'For medium projects with extended functionality',
+        feature1: 'Detailed requirements analysis',
+        feature2: 'UX/UI design',
+        feature3: 'Full development',
+        feature4: 'Comprehensive testing',
+        feature5: 'Post-launch support (3 months)'
+      },
+      premium: {
+        name: 'Enterprise',
+        price: 'from 500,000 ₽',
+        description: 'For complex corporate projects',
+        feature1: 'Deep business analysis',
+        feature2: 'Architecture design',
+        feature3: 'High-load systems development',
+        feature4: 'Multi-level testing',
+        feature5: 'Extended technical support'
+      }
+    }
+  },
+  testimonials: {
+    title: 'Client Testimonials',
+    subtitle: 'See what our clients say about working with us',
+    client1: {
+      name: 'Анна Цыренова',
+      position: 'Директор',
+      company: 'Кафе «С огоньком!»',
+      text: 'Мы познакомились прошлым летом, когда создавали с нуля сайт для кафе «С огоньком!» в поселке Агинское. С тех пор наше сотрудничество продолжается. Мне очень нравится, потому что это профессионалы в своем деле, всё делается быстро, без лишних вопросов и проблем. Я искренне благодарна за качественную работу и оперативное решение любых вопросов — будь то доработки сайта или консультации по другим техническим моментам. С Бадара легко и комфортно сотрудничать, поэтому я всегда обращаюсь именно к нему. Большое спасибо за отличную работу!'
+    },
+    client2: {
+      name: 'Дмитрий Иванов',
+      position: 'CEO',
+      company: 'ТехноПром',
+      text: 'We have been working with Automagica Solutions for over a year. During this time, they implemented a CRM system for us and integrated it with our website and telephony. The result exceeded expectations - sales increased by 35%, and the time for processing applications was reduced by three times. I would like to separately note the professionalism of the team and their willingness to promptly resolve emerging issues.'
+    },
+    client3: {
+      name: 'Сергей и Марина',
+      position: 'Владельцы',
+      company: 'Гостевой дом «Байкал»',
+      text: 'Спасибо Вашей команде за крутой проект нашего сайта! Для нас с Мариной это был первый опыт, многое было непонятно и сложно, поэтому благодарим за терпение и понимание! Желаем дальнейших успехов! Пусть Ваши планы успешно реализуются!✊✊✊'
+    }
+  },
+  about: {
+    title: 'About Us',
+    subtitle: 'We help businesses become more efficient through modern technology',
+    mission: {
+      title: 'Our Mission',
+      desc: 'Make technology accessible and useful for businesses of any scale, helping companies grow and reach new heights.'
+    },
+    vision: {
+      title: 'Our Vision',
+      desc: 'Become a leading company in the field of business process automation, creating innovative solutions that change the approach to doing business.'
+    },
+    values: {
+      title: 'Our Values',
+      quality: 'Quality in everything we do',
+      innovation: 'Innovation and continuous development',
+      client: 'Client-oriented approach and individual solutions',
+      transparency: 'Transparency and honesty in work'
+    },
+    team: {
+      title: 'Our Team',
+      desc: 'Behind every successful project is a team of professionals',
+      ceo: {
+        name: 'Alexander Petrov',
+        position: 'CEO',
+        bio: 'More than 15 years of experience in the IT industry. Led projects for major Russian companies.'
+      },
+      cto: {
+        name: 'Badara Bazarov',
+        position: 'CTO',
+        bio: '12 years of development experience. Expert in software solution architecture and business process automation.'
+      },
+      lead: {
+        name: 'Ekaterina Smirnova',
+        position: 'Lead Developer',
+        bio: 'Experienced developer with deep knowledge in web technologies and mobile development.'
+      }
+    }
+  },
+  cases: {
+    title: 'Our Cases',
+    subtitle: 'Real examples of successful projects for our clients',
+    readMore: 'Read More',
+    case1: {
+      title: 'Restaurant Chain Automation',
+      desc: 'Implementation of a comprehensive management system for a network of 5 restaurants, including warehouse automation, kitchen, and loyalty system.',
+      results: 'Turnover increased by 27%, costs reduced by 15%, customer loyalty improved.'
+    },
+    case2: {
+      title: 'CRM for Construction Company',
+      desc: 'Development and implementation of a CRM system tailored to the specifics of the construction business, integration with accounting system and website.',
+      results: 'Sales cycle reduced by 30%, conversion of leads to deals increased by 24%.'
+    },
+    case3: {
+      title: 'Mobile App for Delivery Service',
+      desc: 'Creation of a native mobile application for iOS and Android for a food delivery service with integration of payment systems and CRM.',
+      results: 'More than 10,000 downloads in the first month, 45% growth in orders through the app.'
+    },
+    case4: {
+      title: 'Hotel Complex Automation',
+      desc: 'Implementation of a hotel management system, including booking modules, reception, and room fund management.',
+      results: 'Occupancy increased by 18%, time for processing bookings reduced by 75%.'
+    }
+  },
+  notFound: {
+    title: 'Page Not Found',
+    message: 'Sorry, the requested page does not exist.',
+    backButton: 'Back to Home'
+  }
+};
+
+// Create the language context
 interface LanguageContextType {
-  lang: Language;
+  language: Language;
   setLanguage: (lang: Language) => void;
-  t: (key: TranslationKey) => string;
+  t: (key: string) => string;
 }
 
-// ============================================================
-// Переводы
-// ============================================================
-// Create translations object
-const translations = {
-  ru: {
-    // Header
-    'nav.services': 'Услуги',
-    'nav.partners': 'Партнеры',
-    'nav.clients': 'Клиенты',
-    'nav.benefits': 'Преимущества',
-    'nav.tariffs': 'Тарифы',
-    'nav.cases': 'Кейсы',
-    'nav.testimonials': 'Отзывы',
-    'nav.about': 'О нас',
-    'nav.contact': 'Контакты',
-    'nav.quote': 'Получить предложение',
-    
-    // Hero Section
-    'hero.title': 'Трансформируем бизнес через',
-    'hero.titleHighlight': 'автоматизацию',
-    'hero.subtitle': 'Мы создаем индивидуальные ИТ-решения, которые автоматизируют процессы, повышают эффективность и способствуют росту бизнеса любого масштаба.',
-    'hero.getStarted': 'Начать',
-    'hero.ourServices': 'Наши услуги',
-    'hero.secure': 'Безопасные решения',
-    'hero.fast': 'Быстрое внедрение',
-    'hero.support': 'Поддержка 24/7',
-    
-    // Services Section
-    'services.title': 'Наши Услуги',
-    'services.subtitle': 'Мы предоставляем комплексные ИТ-решения, чтобы помочь вашему бизнесу расти и процветать в цифровую эпоху.',
-    'services.crm.title': 'Внедрение CRM',
-    'services.crm.desc': 'Мы готовим ваш бизнес к эффективной работе: аудит процессов, подбор ПО, настройка и внедрение таких решений, как Bitrix24 и amoCRM.',
-    'services.software.title': 'Разработка ПО',
-    'services.software.desc': 'Индивидуальные программные решения, включающие написание кода, тестирование, отладку и оптимизацию для удовлетворения конкретных потребностей вашего бизнеса.',
-    'services.mobile.title': 'Разработка мобильных приложений',
-    'services.mobile.desc': 'Создание мобильных приложений для устройств iOS и Android, обеспечивающих безупречный опыт для ваших клиентов.',
-    'services.website.title': 'Создание сайтов',
-    'services.website.desc': 'От простых до сложных веб-сайтов - мы создаем адаптивные и современные веб-решения, представляющие ваш бренд в интернете.',
-    'services.automation.title': 'ИТ-автоматизация',
-    'services.automation.desc': 'Оптимизируйте бизнес-процессы с помощью индивидуальных решений по автоматизации, которые экономят время и снижают количество ошибок.',
-    'services.database.title': 'Администрирование баз данных',
-    'services.database.desc': 'Экспертное управление вашими базами данных, обеспечивающее оптимальную производительность, безопасность и надежность.',
-    'services.learnMore': 'Узнать больше',
-    
-    // Clients Section
-    'clients.title': 'Наши Клиенты',
-    'clients.subtitle': 'Нам доверяют компании из различных отраслей',
-    
-    // Partners Section
-    'partners.title': 'Наши Партнеры',
-    'partners.subtitle': 'Мы сотрудничаем с лидерами отрасли, чтобы предложить вам лучшие решения.',
-     
-    // Benefits Section
-    'benefits.title': 'Почему Выбирают Нас',
-    'benefits.international.title': 'Международные Проекты',
-    'benefits.international.desc': 'Опыт работы в международных компаниях, таких как Huawei, NetCracker, EPAM, гарантирует применение всех соответствующих компетенций и соблюдение высочайших стандартов качества и профессионализма в ИТ-сфере.',
-    'benefits.prices.title': 'Демократичные Цены',
-    'benefits.prices.desc': 'С демократичным ценообразованием вы можете быть уверены, что получаете справедливую цену за качество и преимущества, без скрытых комиссий или наценок.',
-    'benefits.quality.title': 'Качественные Услуги',
-    'benefits.quality.desc': 'Опыт работы в отрасли, использование новейших технологий и методологий для обеспечения эффективности, надежности и результативности наших ИТ-услуг.',
-    
-    // Contact Section
-    'contact.title': 'Связаться с Нами',
-    'contact.name': 'Ваше Имя',
-    'contact.email': 'Ваш Email',
-    'contact.message': 'Ваше Сообщение',
-    'contact.call': 'Позвоните нам:',
-    'contact.send': 'Отправить Сообщение',
-    
-    // Footer
-    'footer.about': 'Мы предоставляем профессиональные услуги по автоматизации и ИТ-решения, помогающие бизнесу трансформироваться и расти.',
-    'footer.quickLinks': 'Быстрые Ссылки',
-    'footer.contactUs': 'Свяжитесь с Нами',
-    'footer.rights': 'Все права защищены.',
-    'footer.privacy': 'Политика конфиденциальности',
-    'footer.terms': 'Условия использования',
-    'footer.address': 'г. Москва, Б. Новодмитровская ул., 36 ст1',
-	
-    // Inside the 'ru' object in translations:
-    'about.title': 'О нас',
-    'about.subtitle': 'Создаем решения для вашего успеха',
-    'about.description': 'Мы — команда профессионалов, специализирующаяся на автоматизации бизнес-процессов и разработке IT-решений. Наш опыт позволяет решать задачи любой сложности.',
-    'about.joinTeam': 'Присоединиться к команде',
-    'about.contactUs': 'Связаться с нами',
-
-    // Values Section
-    'about.values.title': 'Наши Ценности',
-    'about.values.v1.title': 'Инновации',
-    'about.values.v1.description': 'Мы постоянно исследуем новые технологии, чтобы предлагать передовые решения.',
-    'about.values.v2.title': 'Клиентоориентированность',
-    'about.values.v2.description': 'Ваши потребности — наш главный приоритет.',
-    'about.values.v3.title': 'Надежность',
-    'about.values.v3.description': 'Гарантируем стабильность и безопасность всех решений.',
-
-    // Team Section
-    'about.team.title': 'Наша Команда',
-    'about.team.subtitle': 'Профессионалы с опытом в международных проектах',
-    'about.team.member1.name': 'Алексей Петров',
-    'about.team.member1.position': 'CTO',
-    'about.team.member1.bio': 'Эксперт в области IT-архитектуры и автоматизации.',
-    'about.team.member2.name': 'Мария Сидорова',
-    'about.team.member2.position': 'Team Lead',
-    'about.team.member2.bio': 'Специалист по разработке ПО и управлению проектами.',
-    'about.team.member3.name': 'Иван Иванов',
-    'about.team.member3.position': 'DevOps Engineer',
-    'about.team.member3.bio': 'Обеспечивает бесперебойную работу инфраструктуры.',
-    'about.seeAllTeam': 'Вся команда',
-
-    // Milestones Section
-    'about.milestones.title': 'Наша История',
-    'about.milestones.subtitle': 'Ключевые этапы развития компании',
-    'about.milestones.m1.title': 'Основание компании',
-    'about.milestones.m1.description': 'Начали с небольших проектов по автоматизации.',
-    'about.milestones.m2.title': 'Первый международный проект',
-    'about.milestones.m2.description': 'Сотрудничество с компанией из Европы.',
-    'about.milestones.m3.title': 'Расширение команды',
-    'about.milestones.m3.description': 'Команда выросла до 50 специалистов.',
-    'about.milestones.m4.title': 'Запуск R&D отдела',
-    'about.milestones.m4.description': 'Начали разработку собственных решений.',
-    'about.milestones.m5.title': '500+ завершенных проектов',
-    'about.milestones.m5.description': 'Достигли значимых результатов для клиентов.',
-
-    // Locations Section
-    'about.locations.title': 'Наши Офисы',
-    'about.locations.subtitle': 'Мы работаем по всему миру',
-    'about.locations.moscow.title': 'Москва',
-    'about.locations.moscow.address': 'ул. Тверская, 18',
-    'about.locations.spb.title': 'Санкт-Петербург',
-    'about.locations.spb.address': 'Невский проспект, 45',
-    'about.locations.kazan.title': 'Казань',
-    'about.locations.kazan.address': 'ул. Баумана, 7',
-    'about.locations.directions': 'Проложить маршрут',
-    
-    // В разделе 'ru' translations:
-    'cases.title': 'Примеры работ',
-    'cases.subtitle': 'и наши достижения',
-    'cases.results': 'Результат',
-    'cases.case1.title': 'Корпоративный сайт для компании "MVT"',
-    'cases.case1.client': 'Интернет-магазин',
-    'cases.case1.industry': 'Веб-платформа для технологической компании',
-    'cases.case1.duration': '6 месяцев',
-    'cases.case1.description': 'Разработка современного сайта с интеграцией 1С, автоматизацией клиентского взаимодействия и улучшенным управлением контентом.',
-    'cases.case1.results': 'Увеличение конверсии на 40%, сокращение времени обработки заявок на 60%',
-
-    'cases.case2.title': 'Сайт доставки еды "С огоньком!"',
-    'cases.case2.client': 'Кафе',
-    'cases.case2.industry': 'Ресторанный бизнес',
-    'cases.case2.duration': '4 месяца',
-    'cases.case2.description': 'Создание платформы с онлайн-меню, системой бронирования и интеграцией с курьерскими службами.',
-    'cases.case2.results': 'Рост онлайн-заказов на 200%, снижение нагрузки на персонал',
-
-    'cases.case3.title': 'Сайт для хостела "Nayan-Navaa"',
-    'cases.case3.client': 'Гостиница-хостел',
-    'cases.case3.industry': 'Туризм и гостеприимство',
-    'cases.case3.duration': '3 месяца',
-    'cases.case3.description': 'Автоматизация бронирования, система управления номерами и онлайн-оплата.',
-    'cases.case3.results': 'Увеличение заполняемости на 75%, сокращение ручной работы на 90%',
-
-    'cases.case4.title': 'Телеграм бот доставки еды',
-    'cases.case4.client': 'Кафе',
-    'cases.case4.industry': 'Ресторанный бизнес',
-    'cases.case4.duration': '2 месяца',
-    'cases.case4.description': 'ИИ-ассистент для обработки заказов, интеграция с кухней и системой лояльности.',
-    'cases.case4.results': 'Увеличение повторных заказов на 150%, 24/7 доступность',
-
-    // В разделе 'ru' testimonials:
-    'testimonials.title': 'Отзывы',
-    'testimonials.subtitle': 'о нашей работе',
-
-    'testimonials.client1.text': 'Сайт стал важным инструментом для нашего кафе. Онлайн-заказы выросли на 80%, а интеграция с курьерскими службами упростила логистику. Работали строго по срокам — реализовали проект за 4 месяца.',
-    'testimonials.client1.name': 'Цыцык',
-    'testimonials.client1.position': 'Владелец',
-    'testimonials.client1.company': 'Кафе "С огоньком!"',
-
-    'testimonials.client2.text': 'Автоматизация бронирования помогла оптимизировать рабочие процессы. Заполняемость улучшилась на 50%, а ручные операции сократились примерно на 70%. Решение полностью соответствует нашим потребностям.',
-    'testimonials.client2.name': 'Жигзыма',
-    'testimonials.client2.position': 'Владелец',
-    'testimonials.client2.company': 'Хостел "Nayan-Navaa"',
-
-    'testimonials.client3.text': 'Телеграм-бот стабильно обрабатывает 15% заказов. Повторные обращения клиентов увеличились на 10%, что положительно сказалось на выручке. Простая интеграция с существующей системой.',
-    'testimonials.client3.name': 'Цыцык',
-    'testimonials.client3.position': 'Владелец',
-    'testimonials.client3.company': 'Кафе "С огоньком!"',
-
-    // В разделе 'ru' translations:
-    'partners.descriptions.bitrix24': 'Полный набор бизнес-инструментов для совместной работы и CRM',
-    'partners.descriptions.amoCRM': 'Ведущая платформа для ускорения продаж',
-    'partners.descriptions.bnovo': 'Система управления гостиницами и отелями',
-    'partners.descriptions.yandex': 'Облачные вычисления и API',
-    'partners.descriptions.sweb': 'Облачные платформы по запросу',
-    'partners.descriptions.yookassa': 'Онлайн-платежи и эквайринг',
-
-    
-    // В разделе 'ru' translations:
-    'tariffs.title': 'Наши тарифы',
-    'tariffs.subtitle': 'Выберите подходящий вариант для вашего бизнеса',
-    'tariffs.popular': 'Популярный',
-    'tariffs.select': 'Выбрать',
-    'tariffs.customText': 'Нужен индивидуальный тариф?',
-    'tariffs.contactUs': 'Связаться с нами',
-
-    // Новые тарифы
-    'tariffs.basic.name': 'Разработка сайтов и мобильных приложений',
-    'tariffs.basic.price': 'от 30 000 ₽',
-    'tariffs.basic.description': 'Для тех, кто хочет приложение и сайт',
-    'tariffs.basic.feature1': 'СОЗДАНИЕ ПРОТОТИПОВ',
-    'tariffs.basic.feature2': 'АНАЛИЗ ТРЕБОВАНИЙ, СОЗДАНИЕ ТЕХНИЧЕСКОГО ЗАДАНИЯ',
-    'tariffs.basic.feature3': 'ПРОГРАММИРОВАНИЕ НА IOS/ANDROID',
-    'tariffs.basic.feature4': 'СКВОЗНОЕ ТЕСТИРОВАНИЕ',
-
-    'tariffs.standard.name': 'FoodFlow AI',
-    'tariffs.standard.price': 'от 4000 ₽/мес',
-    'tariffs.standard.description': 'Для тех, кто хочет автоматизировать работу с заказами в кафе и ресторанах',
-    'tariffs.standard.feature1': 'СОЗДАНИЕ САЙТА НА ДОСТАВКУ И САМОВЫВОЗ',
-    'tariffs.standard.feature2': 'TELEGRAM ЧАТ БОТЫ С ИИ-АССИСТЕНТОМ ДЛЯ ЗАКАЗОВ',
-    'tariffs.standard.feature3': 'ИНТЕГРАЦИЯ С POS-СИСТЕМАМИ (iiko, СБИС, R-Keeper)',
-    'tariffs.standard.feature4': 'ПРОГРАММЫ ЛОЯЛЬНОСТИ И ПРОМОАКЦИИ',
-    'tariffs.standard.feature5': 'ПОДКЛЮЧЕНИЕ ЭКВАЙРИНГА И ДР.',
-
-    'tariffs.premium.name': 'Внедрение CRM',
-    'tariffs.premium.price': 'от 45 000 ₽',
-    'tariffs.premium.description': 'Для тех, кто хочет упорядочить свое взаимодействие с клиентами',
-    'tariffs.premium.feature1': 'ПОДБОР CRM',
-    'tariffs.premium.feature2': 'АУДИТ И КАРТИРОВАНИЕ БИЗНЕС-ПРОЦЕССОВ',
-    'tariffs.premium.feature3': 'НАСТРОЙКА CRM',
-    'tariffs.premium.feature4': 'ИНТЕГРАЦИЯ CRM С ВНЕШНИМИ СИСТЕМАМИ',
-    'tariffs.premium.feature5': 'ОБУЧЕНИЕ СОТРУДНИКОВ',
-
-  },
-  en: {
-    // Header
-    'nav.services': 'Services',
-    'nav.partners': 'Partners',
-    'nav.clients': 'Clients',
-    'nav.benefits': 'Benefits',
-    'nav.tariffs': 'Tariffs',
-    'nav.cases': 'Cases',
-    'nav.testimonials': 'Testimonials',
-    'nav.about': 'About Us',
-    'nav.contact': 'Contact',
-    'nav.quote': 'Get a Quote',
-    
-    // Hero Section
-    'hero.title': 'Transforming Businesses Through',
-    'hero.titleHighlight': 'Automation',
-    'hero.subtitle': 'We build custom IT solutions that automate processes, improve efficiency, and drive growth for businesses of all sizes.',
-    'hero.getStarted': 'Get Started',
-    'hero.ourServices': 'Our Services',
-    'hero.secure': 'Secure Solutions',
-    'hero.fast': 'Fast Deployment',
-    'hero.support': '24/7 Support',
-    
-    // Services Section
-    'services.title': 'Our Services',
-    'services.subtitle': 'We provide comprehensive IT solutions to help your business grow and thrive in the digital age.',
-    'services.crm.title': 'CRM Implementation',
-    'services.crm.desc': 'We prepare your business for efficient operation by auditing processes, selecting software, configuring and implementing solutions like Bitrix24 and amoCRM.',
-    'services.software.title': 'Software Development',
-    'services.software.desc': 'Custom programming solutions including code writing, testing, debugging and optimization to meet your specific business needs.',
-    'services.mobile.title': 'Mobile App Development',
-    'services.mobile.desc': 'Creating mobile applications for iOS and Android devices that provide seamless experiences for your customers.',
-    'services.website.title': 'Website Creation',
-    'services.website.desc': 'From simple to complex websites, we build responsive and modern web solutions that represent your brand online.',
-    'services.automation.title': 'IT Automation',
-    'services.automation.desc': 'Streamline your business processes with custom automation solutions that save time and reduce errors.',
-    'services.database.title': 'Database Administration',
-    'services.database.desc': 'Expert management of your databases ensuring optimal performance, security, and reliability.',
-    'services.learnMore': 'Learn more',
-    
-    // Clients Section
-    'clients.title': 'Our Clients',
-    'clients.subtitle': 'Trusted by companies across various industries',
-    
-    // Partners Section
-    'partners.title': 'Our Partners',
-    'partners.subtitle': 'We collaborate with several industries to bring you the best solutions.',
-    
-    // Benefits Section
-    'benefits.title': 'Why Choose Us',
-    'benefits.international.title': 'International Projects',
-    'benefits.international.desc': 'Experience in international companies such as Huawei, NetCracker, EPAM ensures that we apply all relevant competencies and maintain the highest standards of quality and professionalism in the IT field.',
-    'benefits.prices.title': 'Democratic Prices',
-    'benefits.prices.desc': 'With democratic pricing, you can be assured that you are getting a fair price for the quality and benefits you receive, without any hidden fees or mark-ups.',
-    'benefits.quality.title': 'Quality Services',
-    'benefits.quality.desc': 'Experience in the industry, and utilizing the latest technology and methodology to ensure the efficiency, reliability and effectiveness of our IT services.',
-    
-    // Contact Section
-    'contact.title': 'Get In Touch',
-    'contact.name': 'Your Name',
-    'contact.email': 'Your Email',
-    'contact.message': 'Your Message',
-    'contact.call': 'Call us at:',
-    'contact.send': 'Send Message',
-    
-    // Footer
-    'footer.about': 'We provide professional automation services and IT solutions to help businesses transform and grow.',
-    'footer.quickLinks': 'Quick Links',
-    'footer.contactUs': 'Contact Us',
-    'footer.rights': 'All rights reserved.',
-    'footer.privacy': 'Privacy Policy',
-    'footer.terms': 'Terms of Service',
-    'footer.address': 'Moscow, B.Novodmitrovskaya Str., 36 bld 1',
-	
-    // Inside the 'en' object in translations:
-    'about.title': 'About Us',
-    'about.subtitle': 'Building Solutions for Your Success',
-    'about.description': 'We are a team of professionals specializing in business process automation and IT solutions. Our experience allows us to tackle projects of any complexity.',
-    'about.joinTeam': 'Join the Team',
-    'about.contactUs': 'Contact Us',
-
-    // Values Section
-    'about.values.title': 'Our Values',
-    'about.values.v1.title': 'Innovation',
-    'about.values.v1.description': 'We constantly explore new technologies to deliver cutting-edge solutions.',
-    'about.values.v2.title': 'Customer Focus',
-    'about.values.v2.description': 'Your needs are our top priority.',
-    'about.values.v3.title': 'Reliability',
-    'about.values.v3.description': 'We guarantee stability and security for all solutions.',
-
-    // Team Section
-    'about.team.title': 'Our Team',
-    'about.team.subtitle': 'Professionals with International Experience',
-    'about.team.member1.name': 'Alexey Petrov',
-    'about.team.member1.position': 'CTO',
-    'about.team.member1.bio': 'Expert in IT architecture and automation.',
-    'about.team.member2.name': 'Maria Sidorova',
-    'about.team.member2.position': 'Team Lead',
-    'about.team.member2.bio': 'Specialist in software development and project management.',
-    'about.team.member3.name': 'Ivan Ivanov',
-    'about.team.member3.position': 'DevOps Engineer',
-    'about.team.member3.bio': 'Ensures seamless infrastructure operations.',
-    'about.seeAllTeam': 'View All Team',
-
-    // Milestones Section
-    'about.milestones.title': 'Our History',
-    'about.milestones.subtitle': 'Key Milestones',
-    'about.milestones.m1.title': 'Company Foundation',
-    'about.milestones.m1.description': 'Started with small automation projects.',
-    'about.milestones.m2.title': 'First International Project',
-    'about.milestones.m2.description': 'Collaboration with a European company.',
-    'about.milestones.m3.title': 'Team Expansion',
-    'about.milestones.m3.description': 'Grew to a team of 50 specialists.',
-    'about.milestones.m4.title': 'R&D Department Launch',
-    'about.milestones.m4.description': 'Began developing proprietary solutions.',
-    'about.milestones.m5.title': '500+ Completed Projects',
-    'about.milestones.m5.description': 'Delivered significant results for clients.',
-
-    // Locations Section
-    'about.locations.title': 'Our Offices',
-    'about.locations.subtitle': 'We Work Worldwide',
-    'about.locations.moscow.title': 'Moscow',
-    'about.locations.moscow.address': 'Tverskaya St, 18',
-    'about.locations.spb.title': 'Saint Petersburg',
-    'about.locations.spb.address': 'Nevsky Prospect, 45',
-    'about.locations.kazan.title': 'Kazan',
-    'about.locations.kazan.address': 'Bauman St, 7',
-    'about.locations.directions': 'Get Directions',
-    
-    // В разделе 'en' translations:
-    'cases.title': 'Examples of work',
-    'cases.subtitle': 'and our achievements',
-    'cases.results': 'Results',
-    'cases.case1.title': 'Corporate Website for "MVT" Company',
-    'cases.case1.client': 'E-commerce',
-    'cases.case1.industry': 'Tech Company Web Platform',
-    'cases.case1.duration': '6 months',
-    'cases.case1.description': 'Modern website development with 1C integration, customer interaction automation and enhanced content management.',
-    'cases.case1.results': '40% conversion increase, 60% faster request processing',
-
-    'cases.case2.title': 'Food Delivery Website "With Fire!"',
-    'cases.case2.client': 'Cafe',
-    'cases.case2.industry': 'Restaurant Business',
-    'cases.case2.duration': '4 months',
-    'cases.case2.description': 'Platform with online menu, reservation system and courier service integration.',
-    'cases.case2.results': '200% order growth, reduced staff workload',
-
-    'cases.case3.title': 'Hostel Website "Nayan-Navaa"',
-    'cases.case3.client': 'Hostel',
-    'cases.case3.industry': 'Tourism & Hospitality',
-    'cases.case3.duration': '3 months',
-    'cases.case3.description': 'Booking automation, room management system and online payments.',
-    'cases.case3.results': '75% occupancy growth, 90% less manual work',
-
-    'cases.case4.title': 'Telegram Food Delivery Bot',
-    'cases.case4.client': 'Cafe',
-    'cases.case4.industry': 'Restaurant Business',
-    'cases.case4.duration': '2 months',
-    'cases.case4.description': 'AI-powered order processing with kitchen integration and loyalty system.',
-    'cases.case4.results': '150% repeat orders growth, 24/7 availability',
-
-      // В разделе 'en' testimonials:
-    'testimonials.title': 'Testimonials',
-    'testimonials.subtitle': 'about us',
-    
-    'testimonials.client1.text': 'The website became a crucial tool for our cafe. Online orders grew by 80%, and courier service integration simplified logistics. Completed strictly on schedule — implemented in 4 months.',
-    'testimonials.client1.name': 'Tsytsyk',
-    'testimonials.client1.position': 'Owner',
-    'testimonials.client1.company': '"With Fire!" Cafe',
-
-    'testimonials.client2.text': 'Booking automation helped optimize our workflows. Occupancy improved by 50%, and manual operations decreased by approximately 70%. The solution fully meets our needs.',
-    'testimonials.client2.name': 'Zhygzyma',
-    'testimonials.client2.position': 'Owner',
-    'testimonials.client2.company': 'Nayan-Navaa Hostel',
-
-    'testimonials.client3.text': 'The Telegram bot consistently handles 15% of orders. Repeat customer interactions increased by 10%, positively impacting revenue. Seamless integration with existing systems.',
-    'testimonials.client3.name': 'Tsytsyk',
-    'testimonials.client3.position': 'Operations Manager',
-    'testimonials.client3.company': '"With Fire!" Cafe',
-
-      // В разделе 'en' translations:
-    'partners.descriptions.bitrix24': 'A complete suite of business tools for collaboration and CRM',
-    'partners.descriptions.amoCRM': 'Leading sales acceleration platform',
-    'partners.descriptions.bnovo': 'Property Management System',
-    'partners.descriptions.yandex': 'Cloud computing services and APIs',
-    'partners.descriptions.sweb': 'On-demand cloud computing platforms',
-    'partners.descriptions.yookassa': 'Online payments and acquiring',
-
-    // В разделе 'en' translations:
-    'tariffs.title': 'Our Tariffs',
-    'tariffs.subtitle': 'Choose the right option for your business',
-    'tariffs.popular': 'Popular',
-    'tariffs.select': 'Select',
-    'tariffs.customText': 'Need a custom tariff?',
-    'tariffs.contactUs': 'Contact Us',
-
-    // Новые тарифы
-    'tariffs.basic.name': 'Website and Mobile App Development',
-    'tariffs.basic.price': 'from 50,000 RUB',
-    'tariffs.basic.description': 'For those who want an app and a website',
-    'tariffs.basic.feature1': 'PROTOTYPE CREATION',
-    'tariffs.basic.feature2': 'REQUIREMENTS ANALYSIS, TECHNICAL SPECIFICATION',
-    'tariffs.basic.feature3': 'IOS/ANDROID PROGRAMMING',
-    'tariffs.basic.feature4': 'END-TO-END TESTING',
-
-    'tariffs.standard.name': 'FoodFlow AI',
-    'tariffs.standard.price': 'from 4,000 RUB/month',
-    'tariffs.standard.description': 'For those who want to automate orders in cafes and restaurants',
-    'tariffs.standard.feature1': 'DELIVERY AND PICKUP WEBSITE',
-    'tariffs.standard.feature2': 'TELEGRAM CHAT BOTS WITH AI ASSISTANT FOR ORDERS',
-    'tariffs.standard.feature3': 'INTEGRATION WITH POS SYSTEMS (iiko, SBIS, R-Keeper)',
-    'tariffs.standard.feature4': 'LOYALTY PROGRAMS AND PROMOTIONS',
-    'tariffs.standard.feature5': 'PAYMENT GATEWAY CONNECTION ETC.',
-
-    'tariffs.premium.name': 'CRM Implementation',
-    'tariffs.premium.price': 'from 50,000 RUB',
-    'tariffs.premium.description': 'For those who want to organize customer interactions',
-    'tariffs.premium.feature1': 'CRM SELECTION',
-    'tariffs.premium.feature2': 'BUSINESS PROCESS AUDIT AND MAPPING',
-    'tariffs.premium.feature3': 'CRM CONFIGURATION',
-    'tariffs.premium.feature4': 'CRM INTEGRATION WITH EXTERNAL SYSTEMS',
-    'tariffs.premium.feature5': 'STAFF TRAINING',
-
-  }
-} as const;
-
-// ============================================================
-// Контекст
-// ============================================================
-const LanguageContext = createContext<LanguageContextType>({} as LanguageContextType);
-
-// ============================================================
-// Провайдер
-// ============================================================
-export const LanguageProvider = ({ children }: { children: ReactNode }) => {
-  const [lang, setLang] = useState<Language>(() => {
-    // SSR-безопасная инициализация
-    if (typeof window === 'undefined') return 'ru';
-    
-    // Приоритет: localStorage → язык браузера → ru по умолчанию
-    const savedLang = localStorage.getItem('lang');
-    if (savedLang === 'en' || savedLang === 'ru') return savedLang;
-    
-    const browserLang = navigator.language.split('-')[0];
-    return browserLang === 'en' ? 'en' : 'ru';
-  });
-
-  // Синхронизация с localStorage
-  useEffect(() => {
-    localStorage.setItem('lang', lang);
-  }, [lang]);
-
-  // Мемоизация контекста
-  const contextValue = useMemo(() => ({
-    lang,
-    setLanguage: (language: Language) => setLang(language),
-    t: (key: TranslationKey) => {
-      const translation = translations[lang][key];
-      return translation || `[${key}]`;
-    }
-  }), [lang]);
-
-  return (
-    <LanguageContext.Provider value={contextValue}>
-      {children}
-    </LanguageContext.Provider>
-  );
-};
-
-// ============================================================
-// Хук использования
-// ============================================================
-export const useLanguage = () => {
-  const context = useContext(LanguageContext);
-  
-  if (!context) {
-    throw new Error(
-      'useLanguage must be used within a LanguageProvider. ' +
-      'Wrap your application with <LanguageProvider> at the root level.'
-    );
-  }
-  
-  return context;
-};
+const LanguageContext = createContext<LanguageContextType>({
+  language: '

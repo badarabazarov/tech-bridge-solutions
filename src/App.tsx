@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -6,6 +7,10 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { LanguageProvider } from "@/context/LanguageContext";
 import Index from "./pages/Index";
 import Tariffs from "./pages/Tariffs";
+import CrmTariff from "./pages/tariffs/CrmTariff";
+import RestaurantTariff from "./pages/tariffs/RestaurantTariff";
+import HotelTariff from "./pages/tariffs/HotelTariff";
+import CustomTariff from "./pages/tariffs/CustomTariff";
 import Cases from "./pages/Cases";
 import Testimonials from "./pages/Testimonials";
 import About from "./pages/About";
@@ -39,14 +44,17 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <ScrollToTop /> {/* Добавлено здесь */}
+          <ScrollToTop />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/tariffs" element={<Tariffs />} />
+            <Route path="/tariffs/crm" element={<CrmTariff />} />
+            <Route path="/tariffs/restaurant" element={<RestaurantTariff />} />
+            <Route path="/tariffs/hotel" element={<HotelTariff />} />
+            <Route path="/tariffs/custom" element={<CustomTariff />} />
             <Route path="/cases" element={<Cases />} />
             <Route path="/testimonials" element={<Testimonials />} />
             <Route path="/about" element={<About />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

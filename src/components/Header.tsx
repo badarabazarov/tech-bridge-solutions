@@ -1,13 +1,21 @@
+
 // components/Header.tsx
 import React, { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ChevronDown, ChevronUp } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/context/LanguageContext";
 import LanguageSwitcher from './LanguageSwitcher';
 import { Link, useLocation } from 'react-router-dom';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { t } = useLanguage();
   const location = useLocation();
 
@@ -19,6 +27,13 @@ const Header = () => {
   useEffect(() => {
     setIsMenuOpen(false);
   }, [location.pathname]);
+
+  const tariffItems = [
+    { path: "/tariffs/crm", label: t('nav.tariffMenu.crm') },
+    { path: "/tariffs/restaurant", label: t('nav.tariffMenu.restaurant') },
+    { path: "/tariffs/hotel", label: t('nav.tariffMenu.hotel') },
+    { path: "/tariffs/custom", label: t('nav.tariffMenu.custom') },
+  ];
 
   return (
     <header className="sticky top-0 z-40 w-full bg-white/90 backdrop-blur-sm border-b">
@@ -45,9 +60,27 @@ const Header = () => {
           <Link to="/#benefits" className="text-sm font-medium hover:text-brand-600 transition-colors">
             {t('nav.benefits')}
           </Link>
-          <Link to="/tariffs" className="text-sm font-medium hover:text-brand-600 transition-colors">
-            {t('nav.tariffs')}
-          </Link>
+          
+          <DropdownMenu>
+            <DropdownMenuTrigger className="text-sm font-medium hover:text-brand-600 transition-colors flex items-center">
+              {t('nav.tariffs')}
+              {isDropdownOpen ? (
+                <ChevronUp className="ml-1 h-4 w-4" />
+              ) : (
+                <ChevronDown className="ml-1 h-4 w-4" />
+              )}
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              {tariffItems.map((item) => (
+                <DropdownMenuItem key={item.path}>
+                  <Link to={item.path} className="w-full">
+                    {item.label}
+                  </Link>
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+          
           <Link to="/cases" className="text-sm font-medium hover:text-brand-600 transition-colors">
             {t('nav.cases')}
           </Link>
@@ -106,9 +139,30 @@ const Header = () => {
             <Link to="/#benefits" className="block text-sm font-medium hover:text-brand-600 transition-colors">
               {t('nav.benefits')}
             </Link>
-            <Link to="/tariffs" className="block text-sm font-medium hover:text-brand-600 transition-colors">
-              {t('nav.tariffs')}
-            </Link>
+            
+            <div className="block text-sm font-medium">
+              <div 
+                className="flex items-center justify-between hover:text-brand-600 transition-colors"
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+              >
+                <span>{t('nav.tariffs')}</span>
+                {isDropdownOpen ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+              </div>
+              {isDropdownOpen && (
+                <div className="pl-4 mt-2 space-y-2">
+                  {tariffItems.map((item) => (
+                    <Link 
+                      key={item.path} 
+                      to={item.path} 
+                      className="block text-sm hover:text-brand-600 transition-colors"
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+            
             <Link to="/cases" className="block text-sm font-medium hover:text-brand-600 transition-colors">
               {t('nav.cases')}
             </Link>
@@ -129,12 +183,6 @@ const Header = () => {
             >
               {t('nav.contact')}
             </Link>
-
-            {/* Mobile menu 
-            <Link to="/#contact" className="block text-sm font-medium hover:text-brand-600 transition-colors">
-              {t('nav.contact')}
-            </Link>
-            */}
 
             <LanguageSwitcher />
             <Link to="/#contact" className="text-sm font-medium hover:text-brand-600 transition-colors">
