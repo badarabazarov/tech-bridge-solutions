@@ -14,7 +14,7 @@ export default defineConfig({
     },
   },
   server: {
-    allowedHosts: ['automagica.tech', 'www.automagica.tech'],
+    allowedHosts: ['automagica.tech', 'www.automagica.tech', 'ffc0de45-189c-404f-be92-715d05a4e11b.lovableproject.com'],
     port: 8080,
     open: true,
     host: true,
