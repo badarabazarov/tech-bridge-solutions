@@ -4,6 +4,7 @@ import { useLanguage } from '@/context/LanguageContext';
 import ServiceLayout from '@/components/layouts/ServiceLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Code, Globe, Database, Shield, Settings } from 'lucide-react';
+import TariffBlock from '@/components/TariffBlock';
 
 const SoftwareDevelopment = () => {
   const { t } = useLanguage();
@@ -113,6 +114,8 @@ const SoftwareDevelopment = () => {
           </div>
         </div>
       </section>
+      
+      <TariffBlock type="custom" />
     </ServiceLayout>
   );
 };
