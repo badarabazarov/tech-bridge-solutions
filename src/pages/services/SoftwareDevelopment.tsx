@@ -3,7 +3,7 @@ import React from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import ServiceLayout from '@/components/layouts/ServiceLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Code, Globe, Database, Shield, Settings } from 'lucide-react';
+import { Code, Globe, Database, Shield, Settings, CheckCircle } from 'lucide-react';
 import TariffBlock from '@/components/TariffBlock';
 
 const SoftwareDevelopment = () => {
@@ -65,18 +65,53 @@ const SoftwareDevelopment = () => {
     }
   ];
 
+  const benefits = [
+    {
+      icon: <CheckCircle className="h-6 w-6 text-accent-teal" />,
+      title: t('services.software.benefits.quality.title'),
+      description: t('services.software.benefits.quality.description')
+    },
+    {
+      icon: <CheckCircle className="h-6 w-6 text-accent-teal" />,
+      title: t('services.software.benefits.scalable.title'),
+      description: t('services.software.benefits.scalable.description')
+    },
+    {
+      icon: <CheckCircle className="h-6 w-6 text-accent-teal" />,
+      title: t('services.software.benefits.support.title'),
+      description: t('services.software.benefits.support.description')
+    },
+    {
+      icon: <CheckCircle className="h-6 w-6 text-accent-teal" />,
+      title: t('services.software.benefits.time.title'),
+      description: t('services.software.benefits.time.description')
+    }
+  ];
+
   return (
     <ServiceLayout 
       title={t('services.software.title')} 
       description={t('services.software.subtitle')}
     >
-      <section className="py-16 bg-white">
+      {/* Introduction Section */}
+      <section className="py-12 bg-white">
+        <div className="container mx-auto">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-3xl font-bold mb-6">{t('services.software.intro.title')}</h2>
+            <p className="text-lg text-gray-700 mb-6">{t('services.software.intro.description1')}</p>
+            <p className="text-lg text-gray-700">{t('services.software.intro.description2')}</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Services Section */}
+      <section className="py-16 bg-gray-50">
         <div className="container mx-auto">
           <h2 className="text-3xl font-bold text-center mb-12">{t('services.software.services')}</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((service, index) => (
-              <Card key={index} className="border border-gray-200 hover:shadow-md transition-all">
+              <Card key={index} className="border border-gray-200 hover:shadow-lg transition-all">
                 <CardHeader>
                   <div className="mb-4">{service.icon}</div>
                   <CardTitle className="text-xl">{service.title}</CardTitle>
@@ -90,6 +125,28 @@ const SoftwareDevelopment = () => {
         </div>
       </section>
 
+      {/* Benefits Section */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto">
+          <h2 className="text-3xl font-bold text-center mb-12">{t('services.software.benefitsTitle')}</h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            {benefits.map((benefit, index) => (
+              <div key={index} className="flex gap-4">
+                <div className="flex-shrink-0 mt-1">
+                  {benefit.icon}
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold mb-2">{benefit.title}</h3>
+                  <p className="text-gray-600">{benefit.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Process Section */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto">
           <h2 className="text-3xl font-bold text-center mb-12">{t('services.software.processTitle')}</h2>
