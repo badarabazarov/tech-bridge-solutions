@@ -1,3 +1,4 @@
+
 import { useEffect } from "react";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import Footer from "@/components/Footer";
@@ -10,7 +11,7 @@ import { useLanguage } from "@/context/LanguageContext";
 import BitrixForm from "@/components/BitrixForm";
 
 const Index = () => {
-  const { lang, t } = useLanguage(); // Получаем lang и t для перевода
+  const { lang, t } = useLanguage(); // Using lang from context
 
   return (
     <div className="min-h-screen flex flex-col">

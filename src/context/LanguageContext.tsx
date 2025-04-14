@@ -1,7 +1,9 @@
+
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 interface LanguageContextType {
   language: string;
+  lang: string; // Adding lang property as an alias for language
   setLanguage: (lang: string) => void;
   t: (key: string) => string;
 }
@@ -251,7 +253,12 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
   };
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+    <LanguageContext.Provider value={{ 
+      language, 
+      lang: language, // Adding lang as an alias for language
+      setLanguage, 
+      t 
+    }}>
       {children}
     </LanguageContext.Provider>
   );
