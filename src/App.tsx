@@ -6,15 +6,21 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { LanguageProvider } from "@/context/LanguageContext";
 import Index from "./pages/Index";
-import Tariffs from "./pages/Tariffs";
-import CrmTariff from "./pages/tariffs/CrmTariff";
-import RestaurantTariff from "./pages/tariffs/RestaurantTariff";
-import HotelTariff from "./pages/tariffs/HotelTariff";
-import CustomTariff from "./pages/tariffs/CustomTariff";
 import Cases from "./pages/Cases";
 import Testimonials from "./pages/Testimonials";
 import About from "./pages/About";
 import NotFound from "./pages/NotFound";
+
+// Services pages
+import CrmImplementation from "./pages/services/CrmImplementation";
+import Bitrix24Crm from "./pages/services/Bitrix24Crm";
+import AmoCrm from "./pages/services/AmoCrm";
+import SoftwareDevelopment from "./pages/services/SoftwareDevelopment";
+import MobileAppDevelopment from "./pages/services/MobileAppDevelopment";
+import RestaurantSolutions from "./pages/services/RestaurantSolutions";
+import HotelSolutions from "./pages/services/HotelSolutions";
+import TelegramBot from "./pages/services/TelegramBot";
+
 import { useEffect } from 'react';
 
 const queryClient = new QueryClient();
@@ -47,11 +53,17 @@ const App = () => (
           <ScrollToTop />
           <Routes>
             <Route path="/" element={<Index />} />
-            <Route path="/tariffs" element={<Tariffs />} />
-            <Route path="/tariffs/crm" element={<CrmTariff />} />
-            <Route path="/tariffs/restaurant" element={<RestaurantTariff />} />
-            <Route path="/tariffs/hotel" element={<HotelTariff />} />
-            <Route path="/tariffs/custom" element={<CustomTariff />} />
+            
+            {/* Services Routes */}
+            <Route path="/services/crm" element={<CrmImplementation />} />
+            <Route path="/services/crm/bitrix24" element={<Bitrix24Crm />} />
+            <Route path="/services/crm/amocrm" element={<AmoCrm />} />
+            <Route path="/services/software" element={<SoftwareDevelopment />} />
+            <Route path="/services/mobile" element={<MobileAppDevelopment />} />
+            <Route path="/services/restaurant" element={<RestaurantSolutions />} />
+            <Route path="/services/hotel" element={<HotelSolutions />} />
+            <Route path="/services/telegram" element={<TelegramBot />} />
+            
             <Route path="/cases" element={<Cases />} />
             <Route path="/testimonials" element={<Testimonials />} />
             <Route path="/about" element={<About />} />

@@ -1,5 +1,4 @@
 
-// components/Header.tsx
 import React, { useState, useEffect } from 'react';
 import { Menu, X, ChevronDown, ChevronUp } from 'lucide-react';
 import { Button } from "@/components/ui/button";
@@ -28,11 +27,13 @@ const Header = () => {
     setIsMenuOpen(false);
   }, [location.pathname]);
 
-  const tariffItems = [
-    { path: "/tariffs/crm", label: t('nav.tariffMenu.crm') },
-    { path: "/tariffs/restaurant", label: t('nav.tariffMenu.restaurant') },
-    { path: "/tariffs/hotel", label: t('nav.tariffMenu.hotel') },
-    { path: "/tariffs/custom", label: t('nav.tariffMenu.custom') },
+  const serviceItems = [
+    { path: "/services/crm", label: t('nav.servicesMenu.crm') },
+    { path: "/services/software", label: t('nav.servicesMenu.software') },
+    { path: "/services/mobile", label: t('nav.servicesMenu.mobile') },
+    { path: "/services/restaurant", label: t('nav.servicesMenu.restaurant') },
+    { path: "/services/hotel", label: t('nav.servicesMenu.hotel') },
+    { path: "/services/telegram", label: t('nav.servicesMenu.telegram') },
   ];
 
   return (
@@ -48,30 +49,13 @@ const Header = () => {
 
         {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-6">
-          <Link to="/#services" className="text-sm font-medium hover:text-brand-600 transition-colors">
-            {t('nav.services')}
-          </Link>
-          <Link to="/#partners" className="text-sm font-medium hover:text-brand-600 transition-colors">
-            {t('nav.partners')}
-          </Link>
-          <Link to="/#clients" className="text-sm font-medium hover:text-brand-600 transition-colors">
-            {t('nav.clients')}
-          </Link>
-          <Link to="/#benefits" className="text-sm font-medium hover:text-brand-600 transition-colors">
-            {t('nav.benefits')}
-          </Link>
-          
           <DropdownMenu>
             <DropdownMenuTrigger className="text-sm font-medium hover:text-brand-600 transition-colors flex items-center">
-              {t('nav.tariffs')}
-              {isDropdownOpen ? (
-                <ChevronUp className="ml-1 h-4 w-4" />
-              ) : (
-                <ChevronDown className="ml-1 h-4 w-4" />
-              )}
+              {t('nav.services')}
+              <ChevronDown className="ml-1 h-4 w-4" />
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              {tariffItems.map((item) => (
+              {serviceItems.map((item) => (
                 <DropdownMenuItem key={item.path}>
                   <Link to={item.path} className="w-full">
                     {item.label}
@@ -81,6 +65,9 @@ const Header = () => {
             </DropdownMenuContent>
           </DropdownMenu>
           
+          <Link to="/#partners" className="text-sm font-medium hover:text-brand-600 transition-colors">
+            {t('nav.partners')}
+          </Link>
           <Link to="/cases" className="text-sm font-medium hover:text-brand-600 transition-colors">
             {t('nav.cases')}
           </Link>
@@ -127,30 +114,17 @@ const Header = () => {
       {isMenuOpen && (
         <div className="md:hidden bg-white border-b">
           <div className="container py-4 space-y-3">
-            <Link to="/#services" className="block text-sm font-medium hover:text-brand-600 transition-colors">
-              {t('nav.services')}
-            </Link>
-            <Link to="/#partners" className="block text-sm font-medium hover:text-brand-600 transition-colors">
-              {t('nav.partners')}
-            </Link>
-            <Link to="/#clients" className="block text-sm font-medium hover:text-brand-600 transition-colors">
-              {t('nav.clients')}
-            </Link>
-            <Link to="/#benefits" className="block text-sm font-medium hover:text-brand-600 transition-colors">
-              {t('nav.benefits')}
-            </Link>
-            
             <div className="block text-sm font-medium">
               <div 
                 className="flex items-center justify-between hover:text-brand-600 transition-colors"
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
               >
-                <span>{t('nav.tariffs')}</span>
+                <span>{t('nav.services')}</span>
                 {isDropdownOpen ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
               </div>
               {isDropdownOpen && (
                 <div className="pl-4 mt-2 space-y-2">
-                  {tariffItems.map((item) => (
+                  {serviceItems.map((item) => (
                     <Link 
                       key={item.path} 
                       to={item.path} 
@@ -163,6 +137,9 @@ const Header = () => {
               )}
             </div>
             
+            <Link to="/#partners" className="block text-sm font-medium hover:text-brand-600 transition-colors">
+              {t('nav.partners')}
+            </Link>
             <Link to="/cases" className="block text-sm font-medium hover:text-brand-600 transition-colors">
               {t('nav.cases')}
             </Link>

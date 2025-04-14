@@ -1,17 +1,10 @@
 
 import React from 'react';
-import { Database, Code, Smartphone, Globe, Settings, Server } from 'lucide-react';
+import { Database, Code, Smartphone, Hotel, Coffee, MessageSquare } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/context/LanguageContext";
-
-const scrollToContact = (e: React.MouseEvent<HTMLAnchorElement>) => {
-  e.preventDefault();
-  const contactSection = document.getElementById('contact');
-  if (contactSection) {
-    contactSection.scrollIntoView({ behavior: 'smooth' });
-  }
-};
+import { Link } from 'react-router-dom';
 
 const ServicesSection = () => {
   const { t } = useLanguage();
@@ -21,37 +14,37 @@ const ServicesSection = () => {
       icon: <Database className="h-12 w-12 text-brand-600" />,
       title: t('services.crm.title'),
       description: t('services.crm.desc'),
-      link: "#contact"
+      link: "/services/crm"
     },
     {
       icon: <Code className="h-12 w-12 text-accent-teal" />,
       title: t('services.software.title'),
       description: t('services.software.desc'),
-      link: "#contact"
+      link: "/services/software"
     },
     {
       icon: <Smartphone className="h-12 w-12 text-accent-indigo" />,
       title: t('services.mobile.title'),
       description: t('services.mobile.desc'),
-      link: "#contact"
+      link: "/services/mobile"
     },
     {
-      icon: <Globe className="h-12 w-12 text-brand-600" />,
-      title: t('services.website.title'),
-      description: t('services.website.desc'),
-      link: "#contact"
+      icon: <Coffee className="h-12 w-12 text-brand-600" />,
+      title: t('services.restaurant.title'),
+      description: t('services.restaurant.desc'),
+      link: "/services/restaurant"
     },
     {
-      icon: <Settings className="h-12 w-12 text-accent-teal" />,
-      title: t('services.automation.title'),
-      description: t('services.automation.desc'),
-      link: "#contact"
+      icon: <Hotel className="h-12 w-12 text-accent-teal" />,
+      title: t('services.hotel.title'),
+      description: t('services.hotel.desc'),
+      link: "/services/hotel"
     },
     {
-      icon: <Server className="h-12 w-12 text-accent-indigo" />,
-      title: t('services.database.title'),
-      description: t('services.database.desc'),
-      link: "#contact"
+      icon: <MessageSquare className="h-12 w-12 text-accent-indigo" />,
+      title: t('services.telegramBot.title'),
+      description: t('services.telegramBot.desc'),
+      link: "/services/telegram"
     }
   ];
 
@@ -78,20 +71,15 @@ const ServicesSection = () => {
                 </CardDescription>
               </CardContent>
               <CardFooter>
-              <Button 
+                <Button 
                   variant="link" 
                   className="p-0 h-auto text-brand-600 hover:text-brand-800" 
                   asChild
                 >
-                 <a
-                    href="#contact"
-                    onClick={scrollToContact}
-                    role="button"
-                    aria-label={t('services.learnMore')}
-                  >
+                  <Link to={service.link}>
                     {t('services.learnMore')} →
-                  </a>
-              </Button>
+                  </Link>
+                </Button>
               </CardFooter>
             </Card>
           ))}
