@@ -12,17 +12,18 @@ const ru = {
     partners: 'Партнеры',
     clients: 'Клиенты',
     benefits: 'Преимущества',
-    tariffs: 'Тарифы',
     cases: 'Кейсы',
     testimonials: 'Отзывы',
     about: 'О нас',
     contact: 'Контакты',
     quote: 'Получить предложение',
-    tariffMenu: {
+    serviceMenu: {
       crm: 'Внедрение CRM',
-      restaurant: 'Решения для ресторанов',
+      software: 'Разработка ПО и сайтов',
+      mobile: 'Разработка мобильных приложений',
+      restaurant: 'Решения для кафе и ресторанов',
       hotel: 'Решения для гостиниц',
-      custom: 'Заказная разработка'
+      telegram: 'Telegram-бот PhotoExposer'
     }
   },
   hero: {
@@ -51,6 +52,260 @@ const ru = {
       title: 'IT-консалтинг',
       desc: 'Анализ бизнес-процессов и рекомендации по оптимизации IT-инфраструктуры',
     },
+    crm: {
+      title: 'Внедрение CRM',
+      subtitle: 'Автоматизация взаимоотношений с клиентами для повышения продаж и лояльности',
+      why: 'Почему внедрение CRM выгодно для вашего бизнеса?',
+      whyDescription: 'CRM-система — это не просто программа для учета клиентов, а комплексное решение, которое помогает автоматизировать работу с клиентами, улучшить качество обслуживания и увеличить продажи.',
+      expertise: 'Наша команда имеет многолетний опыт внедрения CRM-систем для бизнеса различного масштаба — от небольших компаний до крупных корпораций.',
+      platforms: 'Мы работаем с ведущими CRM-системами',
+      benefits: {
+        title: 'Преимущества внедрения CRM',
+        centralization: {
+          title: 'Централизованное управление',
+          description: 'Вся информация о клиентах, сделках и взаимодействиях хранится в одном месте и доступна всем сотрудникам в режиме реального времени.'
+        },
+        automation: {
+          title: 'Автоматизация рутинных задач',
+          description: 'CRM-система автоматизирует рутинные процессы, такие как отправка писем, напоминания о звонках, формирование отчетов и т.д.'
+        },
+        sales: {
+          title: 'Увеличение продаж',
+          description: 'Благодаря CRM вы не теряете потенциальных клиентов, отслеживаете все этапы сделки и повышаете конверсию.'
+        },
+        teamwork: {
+          title: 'Улучшение командной работы',
+          description: 'CRM-система упрощает взаимодействие между сотрудниками и отделами, делая работу более эффективной.'
+        },
+        scalability: {
+          title: 'Гибкость и масштабируемость',
+          description: 'CRM-система растет вместе с вашим бизнесом и адаптируется под изменяющиеся потребности.'
+        }
+      },
+      learnMore: 'Узнать больше',
+      bitrix24: {
+        title: 'Внедрение CRM Битрикс24',
+        subtitle: 'Комплексная автоматизация бизнес-процессов на платформе Битрикс24',
+        why: 'Почему внедрение Битрикс24 выгодно для вашего бизнеса?',
+        whyDescription: 'Битрикс24 — это мощная платформа, которая объединяет все бизнес-процессы вашей компании в одном месте. Она помогает оптимизировать работу, повышать эффективность сотрудников и улучшать качество обслуживания клиентов.',
+        reasons: '5 причин для внедрения Битрикс24:'
+      },
+      amocrm: {
+        title: 'Внедрение amoCRM',
+        subtitle: 'Простая и эффективная CRM-система для управления продажами',
+        why: 'Почему внедрение amoCRM выгодно для вашего бизнеса?',
+        whyDescription: 'amoCRM — это интуитивно понятная CRM-система, специально разработанная для управления продажами. Она помогает менеджерам эффективно работать с клиентами, а руководителям — контролировать процесс продаж и анализировать результаты.',
+        reasons: '5 причин для внедрения amoCRM:'
+      }
+    },
+    software: {
+      title: 'Разработка ПО и сайтов',
+      subtitle: 'Создание индивидуальных программных решений и веб-сайтов любой сложности',
+      approach: 'Наш подход к разработке',
+      approachDescription: 'Мы разрабатываем программное обеспечение и веб-сайты, которые решают конкретные бизнес-задачи и приносят реальную пользу вашей компании.',
+      expertise: 'Наши компетенции',
+      webDev: {
+        title: 'Веб-разработка',
+        description: 'Создание современных, адаптивных и быстрых веб-сайтов и веб-приложений.'
+      },
+      desktop: {
+        title: 'Десктоп-приложения',
+        description: 'Разработка настольных приложений для Windows, macOS и Linux.'
+      },
+      backend: {
+        title: 'Бэкенд-разработка',
+        description: 'Создание надежной серверной инфраструктуры и API для ваших приложений.'
+      },
+      ecommerce: {
+        title: 'Электронная коммерция',
+        description: 'Разработка интернет-магазинов и систем онлайн-продаж.'
+      },
+      integration: {
+        title: 'Интеграции',
+        description: 'Подключение вашего ПО к внешним сервисам и API.'
+      }
+    },
+    mobile: {
+      title: 'Разработка мобильных приложений',
+      subtitle: 'Создание мобильных приложений для iOS и Android',
+      approach: 'Наш подход к разработке',
+      approachDescription: 'Мы создаем мобильные приложения, которые не только выглядят стильно, но и обеспечивают высокую производительность и удобство использования.',
+      collaboration: 'Работая с нами, вы получаете не только качественное мобильное приложение, но и надежного партнера, который поможет вам на всех этапах — от идеи до запуска и поддержки.',
+      expertiseTitle: 'Наши компетенции',
+      platforms: {
+        ios: 'Разработка нативных приложений для iPhone и iPad с использованием Swift и iOS SDK.',
+        android: 'Создание нативных приложений для Android-устройств с использованием Kotlin и Java.'
+      },
+      expertise: {
+        cross: {
+          title: 'Кросс-платформенная разработка',
+          description: 'Создание приложений, работающих на iOS и Android с единой кодовой базой.'
+        },
+        native: {
+          title: 'Нативная разработка',
+          description: 'Разработка приложений, максимально использующих возможности устройств.'
+        },
+        integration: {
+          title: 'Интеграция с API',
+          description: 'Подключение приложений к внешним сервисам и системам.'
+        },
+        performance: {
+          title: 'Оптимизация производительности',
+          description: 'Создание быстрых и отзывчивых приложений, экономящих заряд батареи.'
+        },
+        security: {
+          title: 'Безопасность',
+          description: 'Защита данных пользователей с использованием современных методов шифрования.'
+        }
+      },
+      cta: {
+        title: 'Готовы создать мобильное приложение для вашего бизнеса?',
+        description: 'Свяжитесь с нами, чтобы обсудить вашу идею и получить консультацию по разработке мобильного приложения.'
+      }
+    },
+    restaurant: {
+      title: 'Решения для кафе и ресторанов',
+      subtitle: 'Комплексная автоматизация ресторанного бизнеса',
+      challenges: 'Вызовы ресторанного бизнеса',
+      challengesDescription: 'Современный ресторанный бизнес сталкивается с множеством вызовов: высокая конкуренция, необходимость контроля издержек, требовательные клиенты и быстро меняющиеся тренды.',
+      solution: 'Мы предлагаем комплексные решения для автоматизации всех аспектов работы вашего заведения — от приема заказов и управления столиками до контроля запасов и аналитики продаж.',
+      featuresTitle: 'Возможности наших решений',
+      benefits: {
+        title: 'Преимущества автоматизации',
+        efficiency: 'Повышение операционной эффективности и скорости обслуживания',
+        customer: 'Улучшение клиентского опыта и увеличение лояльности',
+        costs: 'Снижение издержек и контроль расходов',
+        insights: 'Аналитика и инсайты для принятия стратегических решений',
+        competitive: 'Конкурентное преимущество на рынке'
+      },
+      features: {
+        ordering: {
+          title: 'Управление заказами',
+          description: 'Удобная система приема и обработки заказов, интеграция с кухней и баром.'
+        },
+        reservation: {
+          title: 'Бронирование столиков',
+          description: 'Онлайн-система резервирования столиков, управление рассадкой гостей.'
+        },
+        analytics: {
+          title: 'Аналитика и отчеты',
+          description: 'Подробная статистика продаж, популярности блюд, загруженности заведения.'
+        },
+        payments: {
+          title: 'Прием платежей',
+          description: 'Интеграция с кассовыми аппаратами, поддержка различных способов оплаты.'
+        },
+        loyalty: {
+          title: 'Программы лояльности',
+          description: 'Управление скидками, акциями, бонусными программами для клиентов.'
+        }
+      }
+    },
+    hotel: {
+      title: 'Решения для гостиниц',
+      subtitle: 'Автоматизация гостиничного бизнеса для любого масштаба',
+      challenges: 'Вызовы гостиничного бизнеса',
+      challengesDescription: 'Гостиничный бизнес требует эффективного управления номерным фондом, организации работы персонала, контроля качества обслуживания и оптимизации загрузки.',
+      solution: 'Мы предлагаем решения для автоматизации всех аспектов работы гостиницы — от бронирования номеров и регистрации гостей до управления персоналом и аналитики эффективности.',
+      featuresTitle: 'Возможности наших решений',
+      benefits: {
+        title: 'Преимущества автоматизации',
+        efficiency: 'Оптимизация рабочих процессов и повышение производительности персонала',
+        experience: 'Улучшение качества обслуживания гостей',
+        revenue: 'Увеличение доходности и оптимизация загрузки',
+        insights: 'Аналитика для принятия стратегических решений',
+        competitive: 'Конкурентное преимущество на рынке'
+      },
+      features: {
+        booking: {
+          title: 'Управление бронированиями',
+          description: 'Система онлайн-бронирования, интеграция с глобальными сервисами бронирования.'
+        },
+        management: {
+          title: 'Управление номерным фондом',
+          description: 'Контроль статуса номеров, планирование уборки, техобслуживания.'
+        },
+        analytics: {
+          title: 'Аналитика и отчеты',
+          description: 'Статистика загрузки, средних цен, эффективности маркетинговых кампаний.'
+        },
+        payments: {
+          title: 'Управление платежами',
+          description: 'Автоматизация расчетов с гостями, выставление счетов, контроль задолженностей.'
+        },
+        websites: {
+          title: 'Сайты для гостиниц',
+          description: 'Разработка современных сайтов с интегрированной системой бронирования.'
+        }
+      }
+    },
+    telegram: {
+      title: 'Telegram-бот PhotoExposer',
+      subtitle: 'Автоматическая обработка и улучшение фотографий через Telegram',
+      description: 'PhotoExposer — это инновационный Telegram-бот, который позволяет мгновенно обрабатывать и улучшать фотографии, не выходя из мессенджера.',
+      features: {
+        title: 'Возможности PhotoExposer',
+        enhancement: {
+          title: 'Автоматическое улучшение',
+          description: 'Мгновенная коррекция экспозиции, цвета и резкости фотографий.'
+        },
+        filters: {
+          title: 'Художественные фильтры',
+          description: 'Набор профессиональных фильтров для создания уникального стиля фотографий.'
+        },
+        face: {
+          title: 'Ретушь портретов',
+          description: 'Интеллектуальная ретушь лица с сохранением естественности.'
+        },
+        batch: {
+          title: 'Пакетная обработка',
+          description: 'Возможность обработать сразу несколько фотографий с одинаковыми настройками.'
+        },
+        export: {
+          title: 'Экспорт результатов',
+          description: 'Сохранение обработанных фотографий в высоком качестве.'
+        }
+      },
+      howToUse: {
+        title: 'Как начать использовать',
+        step1: 'Найдите бота @PhotoExposerBot в Telegram',
+        step2: 'Отправьте фотографию боту',
+        step3: 'Выберите нужный режим обработки',
+        step4: 'Получите улучшенную фотографию в течение нескольких секунд'
+      },
+      pricing: {
+        title: 'Тарифы',
+        free: {
+          title: 'Бесплатный',
+          price: '0 ₽',
+          description: 'Для ознакомления с основными функциями',
+          feature1: 'До 10 фотографий в день',
+          feature2: 'Базовое улучшение фото',
+          feature3: '3 художественных фильтра',
+          feature4: 'Стандартное качество экспорта'
+        },
+        premium: {
+          title: 'Премиум',
+          price: '299 ₽/месяц',
+          description: 'Для активных пользователей',
+          feature1: 'Неограниченное количество фотографий',
+          feature2: 'Продвинутое улучшение фото',
+          feature3: 'Все художественные фильтры',
+          feature4: 'Высокое качество экспорта',
+          feature5: 'Пакетная обработка'
+        },
+        professional: {
+          title: 'Профессиональный',
+          price: '699 ₽/месяц',
+          description: 'Для профессиональных фотографов',
+          feature1: 'Все функции Премиум-тарифа',
+          feature2: 'Продвинутая ретушь портретов',
+          feature3: 'Приоритетная обработка',
+          feature4: 'Экспорт в максимальном качестве',
+          feature5: 'Сохранение пресетов'
+        }
+      }
+    }
   },
   partners: {
     title: 'Наши партнеры',
@@ -397,17 +652,18 @@ const en = {
     partners: 'Partners',
     clients: 'Clients',
     benefits: 'Benefits',
-    tariffs: 'Pricing',
     cases: 'Cases',
     testimonials: 'Testimonials',
     about: 'About Us',
     contact: 'Contact',
     quote: 'Get a Quote',
-    tariffMenu: {
+    serviceMenu: {
       crm: 'CRM Implementation',
+      software: 'Software & Web Development',
+      mobile: 'Mobile App Development',
       restaurant: 'Restaurant Solutions',
       hotel: 'Hotel Solutions',
-      custom: 'Custom Development'
+      telegram: 'Telegram Bot PhotoExposer'
     }
   },
   hero: {
@@ -436,6 +692,260 @@ const en = {
       title: 'IT Consulting',
       desc: 'Analysis of business processes and recommendations for optimizing IT infrastructure',
     },
+    crm: {
+      title: 'CRM Implementation',
+      subtitle: 'Automate customer relationships to increase sales and loyalty',
+      why: 'Why is CRM implementation beneficial for your business?',
+      whyDescription: 'A CRM system is not just a customer management program, but a comprehensive solution that helps automate customer interactions, improve service quality, and increase sales.',
+      expertise: 'Our team has years of experience implementing CRM systems for businesses of all sizes — from small companies to large corporations.',
+      platforms: 'We work with leading CRM systems',
+      benefits: {
+        title: 'Benefits of CRM Implementation',
+        centralization: {
+          title: 'Centralized Management',
+          description: 'All information about customers, deals, and interactions is stored in one place and available to all employees in real-time.'
+        },
+        automation: {
+          title: 'Routine Task Automation',
+          description: 'The CRM system automates routine processes such as sending emails, call reminders, report generation, etc.'
+        },
+        sales: {
+          title: 'Increased Sales',
+          description: 'With CRM, you don\'t lose potential customers, track all stages of the deal, and increase conversion.'
+        },
+        teamwork: {
+          title: 'Improved Teamwork',
+          description: 'The CRM system simplifies interaction between employees and departments, making work more efficient.'
+        },
+        scalability: {
+          title: 'Flexibility and Scalability',
+          description: 'The CRM system grows with your business and adapts to changing needs.'
+        }
+      },
+      learnMore: 'Learn More',
+      bitrix24: {
+        title: 'Bitrix24 CRM Implementation',
+        subtitle: 'Comprehensive business process automation on the Bitrix24 platform',
+        why: 'Why is Bitrix24 implementation beneficial for your business?',
+        whyDescription: 'Bitrix24 is a powerful platform that unites all your company\'s business processes in one place. It helps optimize work, increase employee efficiency, and improve customer service quality.',
+        reasons: '5 reasons to implement Bitrix24:'
+      },
+      amocrm: {
+        title: 'amoCRM Implementation',
+        subtitle: 'Simple and effective CRM system for sales management',
+        why: 'Why is amoCRM implementation beneficial for your business?',
+        whyDescription: 'amoCRM is an intuitive CRM system specifically designed for sales management. It helps managers effectively work with customers, and helps managers control the sales process and analyze results.',
+        reasons: '5 reasons to implement amoCRM:'
+      }
+    },
+    software: {
+      title: 'Software & Web Development',
+      subtitle: 'Creating custom software solutions and websites of any complexity',
+      approach: 'Our approach to development',
+      approachDescription: 'We develop software and websites that solve specific business problems and bring real benefits to your company.',
+      expertise: 'Our expertise',
+      webDev: {
+        title: 'Web Development',
+        description: 'Creating modern, responsive, and fast websites and web applications.'
+      },
+      desktop: {
+        title: 'Desktop Applications',
+        description: 'Development of desktop applications for Windows, macOS, and Linux.'
+      },
+      backend: {
+        title: 'Backend Development',
+        description: 'Creating a reliable server infrastructure and API for your applications.'
+      },
+      ecommerce: {
+        title: 'E-commerce',
+        description: 'Development of online stores and online sales systems.'
+      },
+      integration: {
+        title: 'Integrations',
+        description: 'Connecting your software to external services and APIs.'
+      }
+    },
+    mobile: {
+      title: 'Mobile App Development',
+      subtitle: 'Creating mobile applications for iOS and Android',
+      approach: 'Our approach to development',
+      approachDescription: 'We create mobile applications that not only look stylish but also provide high performance and usability.',
+      collaboration: 'Working with us, you get not only a quality mobile application but also a reliable partner who will help you at all stages — from idea to launch and support.',
+      expertiseTitle: 'Our expertise',
+      platforms: {
+        ios: 'Development of native applications for iPhone and iPad using Swift and iOS SDK.',
+        android: 'Creation of native applications for Android devices using Kotlin and Java.'
+      },
+      expertise: {
+        cross: {
+          title: 'Cross-platform Development',
+          description: 'Creating applications that work on iOS and Android with a single code base.'
+        },
+        native: {
+          title: 'Native Development',
+          description: 'Developing applications that maximize device capabilities.'
+        },
+        integration: {
+          title: 'API Integration',
+          description: 'Connecting applications to external services and systems.'
+        },
+        performance: {
+          title: 'Performance Optimization',
+          description: 'Creating fast and responsive applications that save battery life.'
+        },
+        security: {
+          title: 'Security',
+          description: 'Protecting user data using modern encryption methods.'
+        }
+      },
+      cta: {
+        title: 'Ready to create a mobile application for your business?',
+        description: 'Contact us to discuss your idea and get a consultation on mobile application development.'
+      }
+    },
+    restaurant: {
+      title: 'Restaurant Solutions',
+      subtitle: 'Comprehensive automation for restaurant business',
+      challenges: 'Restaurant business challenges',
+      challengesDescription: 'Modern restaurant business faces many challenges: high competition, the need to control costs, demanding customers, and rapidly changing trends.',
+      solution: 'We offer comprehensive solutions for automating all aspects of your establishment — from order taking and table management to inventory control and sales analytics.',
+      featuresTitle: 'Features of our solutions',
+      benefits: {
+        title: 'Benefits of automation',
+        efficiency: 'Increased operational efficiency and service speed',
+        customer: 'Improved customer experience and increased loyalty',
+        costs: 'Cost reduction and expense control',
+        insights: 'Analytics and insights for strategic decisions',
+        competitive: 'Competitive advantage in the market'
+      },
+      features: {
+        ordering: {
+          title: 'Order Management',
+          description: 'Convenient system for receiving and processing orders, integration with kitchen and bar.'
+        },
+        reservation: {
+          title: 'Table Reservation',
+          description: 'Online table reservation system, guest seating management.'
+        },
+        analytics: {
+          title: 'Analytics and Reports',
+          description: 'Detailed statistics on sales, dish popularity, establishment occupancy.'
+        },
+        payments: {
+          title: 'Payment Acceptance',
+          description: 'Integration with cash registers, support for various payment methods.'
+        },
+        loyalty: {
+          title: 'Loyalty Programs',
+          description: 'Management of discounts, promotions, bonus programs for customers.'
+        }
+      }
+    },
+    hotel: {
+      title: 'Hotel Solutions',
+      subtitle: 'Automation for hotel business of any scale',
+      challenges: 'Hotel business challenges',
+      challengesDescription: 'The hotel business requires efficient room fund management, staff organization, service quality control, and load optimization.',
+      solution: 'We offer solutions for automating all aspects of hotel operations — from room booking and guest registration to staff management and performance analytics.',
+      featuresTitle: 'Features of our solutions',
+      benefits: {
+        title: 'Benefits of automation',
+        efficiency: 'Optimization of work processes and increased staff productivity',
+        experience: 'Improved guest service quality',
+        revenue: 'Increased profitability and load optimization',
+        insights: 'Analytics for strategic decisions',
+        competitive: 'Competitive advantage in the market'
+      },
+      features: {
+        booking: {
+          title: 'Booking Management',
+          description: 'Online booking system, integration with global booking services.'
+        },
+        management: {
+          title: 'Room Fund Management',
+          description: 'Control of room status, planning of cleaning, maintenance.'
+        },
+        analytics: {
+          title: 'Analytics and Reports',
+          description: 'Statistics on occupancy, average prices, effectiveness of marketing campaigns.'
+        },
+        payments: {
+          title: 'Payment Management',
+          description: 'Automation of calculations with guests, invoicing, debt control.'
+        },
+        websites: {
+          title: 'Hotel Websites',
+          description: 'Development of modern websites with integrated booking system.'
+        }
+      }
+    },
+    telegram: {
+      title: 'Telegram Bot PhotoExposer',
+      subtitle: 'Automatic processing and enhancement of photos via Telegram',
+      description: 'PhotoExposer is an innovative Telegram bot that allows you to instantly process and enhance photos without leaving the messenger.',
+      features: {
+        title: 'PhotoExposer Features',
+        enhancement: {
+          title: 'Automatic Enhancement',
+          description: 'Instant correction of exposure, color, and sharpness of photos.'
+        },
+        filters: {
+          title: 'Artistic Filters',
+          description: 'Set of professional filters to create a unique style of photos.'
+        },
+        face: {
+          title: 'Portrait Retouching',
+          description: 'Intelligent face retouching while maintaining naturalness.'
+        },
+        batch: {
+          title: 'Batch Processing',
+          description: 'Ability to process several photos at once with the same settings.'
+        },
+        export: {
+          title: 'Result Export',
+          description: 'Saving processed photos in high quality.'
+        }
+      },
+      howToUse: {
+        title: 'How to Start Using',
+        step1: 'Find the bot @PhotoExposerBot in Telegram',
+        step2: 'Send a photo to the bot',
+        step3: 'Choose the desired processing mode',
+        step4: 'Get an enhanced photo within seconds'
+      },
+      pricing: {
+        title: 'Pricing',
+        free: {
+          title: 'Free',
+          price: '0 ₽',
+          description: 'For familiarization with basic functions',
+          feature1: 'Up to 10 photos per day',
+          feature2: 'Basic photo enhancement',
+          feature3: '3 artistic filters',
+          feature4: 'Standard export quality'
+        },
+        premium: {
+          title: 'Premium',
+          price: '299 ₽/month',
+          description: 'For active users',
+          feature1: 'Unlimited number of photos',
+          feature2: 'Advanced photo enhancement',
+          feature3: 'All artistic filters',
+          feature4: 'High export quality',
+          feature5: 'Batch processing'
+        },
+        professional: {
+          title: 'Professional',
+          price: '699 ₽/month',
+          description: 'For professional photographers',
+          feature1: 'All Premium features',
+          feature2: 'Advanced portrait retouching',
+          feature3: 'Priority processing',
+          feature4: 'Maximum quality export',
+          feature5: 'Preset saving'
+        }
+      }
+    }
   },
   partners: {
     title: 'Our Partners',
